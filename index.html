@@ -4,7 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Chequeos COMFRUT</title>
-<link rel="icon" href="logo.jpg">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0B1A8C">
 <style>
 :root{--dark:#0B1A8C;--dark2:#1225FD;--cyan:#3BDAFF;--amber:#F59E0B;--ok:#2E7D32;--okbg:#E3F4E4;--warn:#E65100;--warnbg:#FFF0E0;--bad:#C62828;--badbg:#FDE3E3;--doc:#6A1B9A;--bg:#EEF3FF;--card:#fff;--txt:#1F2D3A;--mut:#64748B;--line:#E2E8F0;--soft:#E8EDFF}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -293,7 +297,7 @@ function vozPantalla() {
   if (p === 2) return VOZ.say(c === 'veh' ? 'Elige la patente. Luego indica cuántos asientos tiene y cuántos trabajadores vas a llevar.' : c === 'tractor' ? 'Elige el tractor y cuéntanos si hoy lleva equipo de fumigación.' : 'Elige el comedor, dónde está y cuántos trabajadores lo usan.');
   if (p < pasoResumen()) { const b = bloques()[p - 3]; return VOZ.say('Parte ' + (p - 2) + ' de ' + nB() + ': ' + b.t + '. ' + (b.d || '') + (b.sn ? ' Responde sí o no con honestidad.' : ' Marca cada punto. Si tienes dudas, toca escuchar.')); }
   if (p === pasoResumen()) { const E = evaluar(); return VOZ.say('Resultado: ' + E.resultado + '. ' + E.mensaje + (E.al.length ? ' Se encontraron ' + E.al.length + ' alertas.' : ' Sin alertas.')); }
-  if (p === pasoReporte()) return VOZ.say('Último paso. El informe le llega a Daniel, Juan y Alexandra. Firma con el dedo y toca enviar.');
+  if (p === pasoReporte()) return VOZ.say('Último paso. Marca a quién le reportas. Daniel recibe siempre copia. Firma con el dedo y toca enviar.');
 }
 
 // ===================== ESTADO =====================
@@ -599,7 +603,7 @@ function vResumen() {
 }
 function vReporte() {
   const w = g => { const on = g.fijo || S.rep.indexOf(g.key) >= 0;
-    return `<div class="who ${on ? 'on' : ''} ${g.fijo ? 'lock' : ''}" onclick="${g.fijo ? '' : `togRep('${g.key}')`}"><div class="ck">${on ? '✓' : ''}</div><div><b>${esc(g.nombre)}</b><span>${esc(g.cargo)}${g.fijo ? ' · recibe siempre' : ''}${!g.mail ? ' · <b style="color:var(--warn)">sin correo registrado</b>' : ''}</span></div></div>`; };
+    return `<div class="who ${on ? 'on' : ''} ${g.fijo ? 'lock' : ''}" onclick="${g.fijo ? '' : `togRep('${g.key}')`}"><div class="ck">${on ? '✓' : ''}</div><div><b>${esc(g.nombre)}</b><span>${esc(g.cargo)}${g.fijo ? ' · recibe siempre copia' : ''}${!g.mail ? ' · <b style="color:var(--warn)">sin correo registrado</b>' : ''}</span></div></div>`; };
   return `<div class="card"><div class="bh"><div class="ic">📤</div><div><h2>Se reporta a</h2><div class="mut small">${S.enc.some(g => !g.fijo) ? 'Toca para marcar o desmarcar a los demás' : 'El informe les llega por correo'}</div></div></div>${S.enc.map(w).join('')}</div>
   <div class="card"><h3>✍️ Tu firma</h3><p class="m">Firmas que revisaste y que lo informado es real.</p><canvas id="cv"></canvas><button class="why" onclick="borraFirma()">Borrar firma</button></div>`;
 }
