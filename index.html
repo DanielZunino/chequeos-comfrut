@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chequeos COMFRUT</title>
+<link rel="icon" href="logo.jpg">
+<style>
+:root{--dark:#0B1A8C;--dark2:#1225FD;--cyan:#3BDAFF;--amber:#F59E0B;--ok:#2E7D32;--okbg:#E3F4E4;--warn:#E65100;--warnbg:#FFF0E0;--bad:#C62828;--badbg:#FDE3E3;--doc:#6A1B9A;--bg:#EEF3FF;--card:#fff;--txt:#1F2D3A;--mut:#64748B;--line:#E2E8F0;--soft:#E8EDFF}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--txt);font-size:16px}
+header{background:linear-gradient(135deg,var(--dark),var(--dark2));color:#fff;padding:12px 16px 12px;position:sticky;top:0;z-index:5;box-shadow:0 2px 10px #0003}
+header .t{font-weight:800;font-size:17px;letter-spacing:.2px}.hrow{display:flex;align-items:center;gap:12px}.logo{height:42px;background:#fff;border-radius:10px;padding:3px 6px}
+.vozb{border:0;background:#ffffff22;color:#fff;font-size:22px;width:44px;height:44px;border-radius:12px;cursor:pointer;flex:0 0 44px}.vozb.off{opacity:.5}
+.oir{border:0;background:var(--soft);color:var(--dark2);font-weight:800;font-size:13px;border-radius:9px;padding:5px 9px;cursor:pointer;margin-left:6px}
+.hablando{outline:3px solid var(--amber);outline-offset:2px}header .s{color:var(--cyan);font-size:12.5px;font-weight:600;margin-top:2px}
+.prog{height:6px;background:#ffffff30;border-radius:9px;margin-top:10px;overflow:hidden}.prog i{display:block;height:100%;background:var(--cyan);width:0;transition:width .3s}
+main{max-width:640px;margin:0 auto;padding:16px 16px 110px}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 1px 3px #0001,0 4px 14px #0b1a8c0f}
+h2{margin:4px 0 6px;font-size:20px;color:var(--dark)}h3{margin:0 0 8px;font-size:16px;color:var(--dark)}
+p.m{color:var(--mut);margin:0 0 12px;font-size:14.5px;line-height:1.4}
+label.l{display:block;font-weight:700;font-size:14px;margin:12px 0 5px}
+input,select,textarea{width:100%;font:inherit;padding:12px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--txt)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--dark2)}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:15px;font:inherit;font-weight:800;font-size:17px;background:var(--dark2);color:#fff;cursor:pointer;text-align:center}
+.btn.am{background:var(--amber);color:#1b1b1b}.btn.gh{background:#fff;color:var(--dark);border:2px solid var(--line)}.btn:disabled{opacity:.45}
+.foot{position:fixed;left:0;right:0;bottom:0;background:#fffffff2;backdrop-filter:blur(6px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));z-index:6}
+.foot .in{max-width:640px;margin:0 auto;display:flex;gap:10px}.foot .btn{padding:14px}.foot .gh{flex:0 0 34%}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;padding:5px 10px;border-radius:99px;margin:3px 4px 3px 0}
+.b-ok{background:var(--okbg);color:var(--ok)}.b-w{background:var(--warnbg);color:var(--warn)}.b-x{background:var(--badbg);color:var(--bad)}.b-n{background:#EEF2F7;color:var(--mut)}
+.eqs{display:grid;gap:10px}
+.eq{display:flex;align-items:center;gap:12px;border:2.5px solid var(--line);border-radius:16px;padding:10px 12px;background:#fff;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%}
+.eq svg{flex:0 0 96px;height:58px}.eq b{font-size:16.5px;display:block}.eq span{font-size:13px;color:var(--mut)}
+.eq.sel{border-color:var(--dark2);background:var(--soft)}.eq .sug{font-size:11.5px;font-weight:800;color:var(--ok);display:block;margin-top:3px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.info{background:var(--soft);border-radius:12px;padding:10px 12px;font-size:14px;margin-top:10px;line-height:1.45}
+.info.w{background:var(--warnbg)}.info.x{background:var(--badbg)}.info.g{background:var(--okbg)}
+.bh{display:flex;align-items:center;gap:12px;margin-bottom:6px}.bh .ic{font-size:34px;width:52px;height:52px;border-radius:14px;background:var(--soft);display:grid;place-items:center}
+.item{border:2px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;background:#fff;transition:border-color .2s}
+.item.v-B{border-color:#A5D6A7}.item.v-R{border-color:#FFCC80}.item.v-M{border-color:#EF9A9A}.item.v-NA{border-color:#CFD8DC}
+.it-h{display:flex;gap:10px;align-items:flex-start}.it-h .e{font-size:24px;line-height:1}.it-h b{font-size:15.5px}
+.crit{font-size:11px;font-weight:800;color:var(--bad);background:var(--badbg);border-radius:6px;padding:1px 6px;margin-left:4px;white-space:nowrap}
+.tip{font-size:13.5px;color:var(--mut);margin-top:3px;line-height:1.35}
+.why{border:0;background:none;color:var(--dark2);font-weight:700;font-size:13px;padding:4px 0;cursor:pointer}
+.whyt{display:none;font-size:13.5px;background:#FFF8E5;border-radius:10px;padding:8px 10px;margin-top:4px;line-height:1.4}.whyt.on{display:block}
+.opts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.opts.sn{grid-template-columns:1fr 1fr}
+.opts button{border:2px solid var(--line);background:#fff;border-radius:11px;padding:9px 2px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;color:var(--mut)}
+.opts button .x{display:block;font-size:20px;margin-bottom:2px}
+.opts .on.B{background:var(--ok);border-color:var(--ok);color:#fff}.opts .on.R{background:var(--warn);border-color:var(--warn);color:#fff}
+.opts .on.M{background:var(--bad);border-color:var(--bad);color:#fff}.opts .on.NA{background:#78909C;border-color:#78909C;color:#fff}
+.det{margin-top:10px;display:none}.det.on{display:block}.det textarea{min-height:58px;font-size:15px}
+.ph{display:flex;align-items:center;gap:10px;margin-top:8px}.ph label{font-size:14px;font-weight:700;color:var(--dark2);cursor:pointer;border:2px dashed #B0BEC5;border-radius:10px;padding:8px 12px}
+.ph img{height:54px;border-radius:8px}
+.sem{border-radius:18px;padding:18px;text-align:center;color:#fff;margin-bottom:14px}
+.sem .r{font-size:30px;font-weight:900;letter-spacing:.5px}.sem .m{font-size:15px;margin-top:4px;opacity:.95}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:#fff;border-radius:14px;padding:12px 6px;text-align:center;box-shadow:0 1px 3px #0001}.kpi b{display:block;font-size:24px}.kpi span{font-size:12px;color:var(--mut);font-weight:700}
+.al{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px}.al:last-child{border:0}
+.al i{font-style:normal;font-size:11.5px;font-weight:800;border-radius:6px;padding:2px 7px;height:fit-content;white-space:nowrap}
+.lv-Crítica{background:var(--badbg);color:var(--bad)}.lv-Documento{background:#F3E5F5;color:var(--doc)}.lv-Media{background:var(--warnbg);color:var(--warn)}.lv-Leve{background:#EEF2F7;color:var(--mut)}
+.who{display:flex;align-items:center;gap:12px;padding:11px;border:2px solid var(--line);border-radius:13px;margin-bottom:8px;cursor:pointer;background:#fff}
+.who.on{border-color:var(--dark2);background:var(--soft)}.who .ck{width:26px;height:26px;border-radius:8px;border:2px solid #B0BEC5;display:grid;place-items:center;font-weight:900;color:#fff;flex:0 0 26px}
+.who.on .ck{background:var(--dark2);border-color:var(--dark2)}.who b{font-size:15px}.who span{display:block;font-size:12.5px;color:var(--mut)}.who.lock{cursor:default}
+canvas{width:100%;height:150px;border:2px dashed #B0BEC5;border-radius:12px;background:#fff;touch-action:none}
+.center{text-align:center}.hero{width:min(320px,92%);height:auto;display:block;margin:4px auto 2px}.big{font-size:56px}.mut{color:var(--mut)}.small{font-size:13px}
+.hide{display:none!important}.spin{width:42px;height:42px;border:5px solid #E2E8F0;border-top-color:var(--dark2);border-radius:50%;animation:s 1s linear infinite;margin:20px auto}@keyframes s{to{transform:rotate(360deg)}}
+.nuevo{border:2.5px dashed var(--amber);border-radius:14px;padding:12px;margin-top:12px;background:#FFFBF0}
+.pie{text-align:center;color:#94A3B8;font-size:11.5px;margin-top:20px}
+#mano{position:fixed;z-index:20;font-size:40px;pointer-events:none;filter:drop-shadow(0 3px 4px #0005);transition:left .35s ease,top .35s ease,opacity .25s;opacity:0}
+#mano.on{opacity:1;animation:toque 1.1s ease-in-out infinite}
+@keyframes toque{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.pulso{animation:pulso 1.4s ease-in-out infinite;border-radius:14px}
+@keyframes pulso{0%,100%{box-shadow:0 0 0 0 #F59E0B00}50%{box-shadow:0 0 0 6px #F59E0B88}}
+.fecha-row{display:flex;gap:8px;align-items:center}.fecha-row input{font-size:20px;letter-spacing:1px;text-align:center;max-width:190px}
+#rut{font-size:22px;letter-spacing:1px;text-align:center}
+.cupo{display:flex;align-items:center;gap:10px;margin-top:10px;font-weight:800}.cupo .bar{flex:1;height:12px;background:#E2E8F0;border-radius:9px;overflow:hidden}.cupo .bar i{display:block;height:100%}
+.stp{display:flex;align-items:center;gap:8px}.stp button{flex:0 0 60px;height:52px;border-radius:12px;border:2px solid var(--line);background:#fff;font-size:24px;font-weight:900;color:var(--dark);cursor:pointer}.stp input{flex:1;min-width:0;text-align:center;font-size:24px;font-weight:800}
+.sino{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.sino button{border:2.5px solid var(--line);background:#fff;border-radius:14px;padding:14px 6px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;color:var(--txt)}
+.sino button.on{border-color:var(--dark2);background:var(--soft);color:var(--dark2)}.sino button .x{display:block;font-size:28px}
+</style>
+</head>
+<body>
+<header><div class="hrow"><img class="logo" id="logo" alt="COMFRUT" src="logo.jpg" onerror="this.style.display='none'"><div style="flex:1;min-width:0"><div class="t">Chequeos COMFRUT</div><div class="s" id="sub">Seguridad antes de partir</div></div><button id="bVoz" class="vozb" onclick="togVoz()" aria-label="Voz">🔊</button></div><div class="prog"><i id="bar"></i></div></header>
+<main id="app"><div class="card center"><div class="spin"></div><p class="mut">Cargando…</p></div></main>
+<div id="mano">👆</div>
+<div class="foot hide" id="foot"><div class="in"><button class="btn gh" id="bBack">← Atrás</button><button class="btn am" id="bNext">Siguiente →</button></div></div>
+
+<script>
+// ===================== CONFIGURACIÓN =====================
+const SCRIPT_URL = 'PEGAR_AQUI_URL_EXEC';   // URL /exec del servidor Apps Script "Servidor chequeos COMFRUT"
+const DIAS_AVISO = 30;               // documentos/licencia: avisar cuando falten menos de 30 días
+const DIAS_SIN_CHEQUEO = 7;          // chequeo SEMANAL
+const AVISO = { km: 1000, h: 25 }, INTERVALO = { km: 10000, h: 250 };
+// ==========================================================
+
+const SVG = {
+  furgon: '<svg viewBox="0 0 130 70"><path d="M6 16h80l22 14 14 6v16H6z" fill="#fff" stroke="#0B1A8C" stroke-width="3"/><path d="M88 20l18 12H88z" fill="#BFE9FF"/><g fill="#BFE9FF"><rect x="14" y="22" width="16" height="11" rx="2"/><rect x="36" y="22" width="16" height="11" rx="2"/><rect x="58" y="22" width="16" height="11" rx="2"/></g><g fill="#7C5A3A"><circle cx="22" cy="29" r="3"/><circle cx="44" cy="29" r="3"/><circle cx="66" cy="29" r="3"/></g><rect x="6" y="40" width="116" height="5" fill="#1225FD"/><circle cx="28" cy="54" r="9" fill="#263238"/><circle cx="28" cy="54" r="4" fill="#B0BEC5"/><circle cx="100" cy="54" r="9" fill="#263238"/><circle cx="100" cy="54" r="4" fill="#B0BEC5"/></svg>',
+  minibus: '<svg viewBox="0 0 130 70"><path d="M4 12h110q10 0 12 10v30H4z" fill="#fff" stroke="#0B1A8C" stroke-width="3"/><g fill="#BFE9FF"><rect x="10" y="18" width="14" height="13" rx="2"/><rect x="28" y="18" width="14" height="13" rx="2"/><rect x="46" y="18" width="14" height="13" rx="2"/><rect x="64" y="18" width="14" height="13" rx="2"/><rect x="82" y="18" width="14" height="13" rx="2"/><rect x="102" y="18" width="20" height="16" rx="2"/></g><g fill="#7C5A3A"><circle cx="17" cy="26" r="3"/><circle cx="35" cy="26" r="3"/><circle cx="53" cy="26" r="3"/><circle cx="71" cy="26" r="3"/><circle cx="89" cy="26" r="3"/></g><rect x="4" y="38" width="122" height="5" fill="#3BDAFF"/><circle cx="26" cy="54" r="9" fill="#263238"/><circle cx="26" cy="54" r="4" fill="#B0BEC5"/><circle cx="104" cy="54" r="9" fill="#263238"/><circle cx="104" cy="54" r="4" fill="#B0BEC5"/></svg>',
+  tractor: '<svg viewBox="0 0 130 70"><path d="M40 10h26v26H40z" fill="none" stroke="#263238" stroke-width="4"/><rect x="44" y="14" width="18" height="16" fill="#BFE9FF"/><path d="M36 36h64l6 12H30z" fill="#2E7D32"/><rect x="66" y="26" width="34" height="12" rx="2" fill="#2E7D32"/><rect x="92" y="16" width="5" height="12" fill="#455A64"/><circle cx="46" cy="50" r="17" fill="#263238"/><circle cx="46" cy="50" r="7" fill="#F59E0B"/><circle cx="104" cy="56" r="10" fill="#263238"/><circle cx="104" cy="56" r="4" fill="#F59E0B"/><path d="M118 40l8-6 0 12z" fill="#F97316"/></svg>',
+  comedor: '<svg viewBox="0 0 130 70"><rect x="4" y="14" width="78" height="38" rx="4" fill="#fff" stroke="#0B1A8C" stroke-width="3"/><path d="M2 14l42-10 42 10" fill="#1225FD"/><rect x="12" y="22" width="22" height="14" rx="2" fill="#BFE9FF"/><rect x="40" y="22" width="22" height="14" rx="2" fill="#BFE9FF"/><path d="M68 22h8v30h-8z" fill="#90A4AE"/><circle cx="24" cy="56" r="7" fill="#263238"/><circle cx="60" cy="56" r="7" fill="#263238"/><rect x="92" y="16" width="16" height="36" rx="3" fill="#3BDAFF"/><rect x="95" y="22" width="10" height="5" fill="#fff"/><rect x="112" y="16" width="16" height="36" rx="3" fill="#3BDAFF"/><rect x="115" y="22" width="10" height="5" fill="#fff"/><path d="M100 4v8M120 4v8" stroke="#1225FD" stroke-width="2"/><text x="96" y="46" font-size="9" fill="#0B1A8C" font-weight="bold">WC</text><text x="116" y="46" font-size="9" fill="#0B1A8C" font-weight="bold">WC</text></svg>'
+};
+// cat: 'veh' furgones/buses · 'tractor' · 'comedor'   (para agregar un tipo nuevo: sumarlo aquí, en bloques() y en el servidor)
+const TIPOS = {
+  furgon:  { t: 'Furgón de personal',  d: 'Furgón o van que traslada trabajadores al campo', cat: 'veh', med: 'km', idL: 'Patente', ej: 'Ej: KXPT21', mm: 'Ej: Hyundai H1' },
+  minibus: { t: 'Minibús de personal', d: 'Minibús o bus para cuadrillas grandes', cat: 'veh', med: 'km', idL: 'Patente', ej: 'Ej: KXPT21', mm: 'Ej: Mercedes Sprinter' },
+  tractor: { t: 'Tractor',             d: 'Tractor agrícola (con o sin equipo de fumigación)', cat: 'tractor', med: 'h', idL: 'Patente o N° interno', ej: 'Ej: Tractor 3 o JK1234', mm: 'Ej: John Deere 5075E' },
+  comedor: { t: 'Comedor móvil',       d: 'Comedor de campo con estación de agua y baños', cat: 'comedor', idL: 'Número o nombre del comedor', ej: 'Ej: Comedor 1', mm: 'Ej: Carro comedor 30 personas' }
+};
+const CAT = () => TIPOS[S.tipo] ? TIPOS[S.tipo].cat : '';
+function licNecesaria() { if (CAT() === 'tractor') return ['D']; const a = num(S.asientos); if (a <= 8) return ['B', 'A2', 'A3']; if (a <= 16) return ['A2', 'A3']; return ['A3']; }
+const I = (id, e, t, tip, why, crit) => ({ id, e, t, tip, why, crit: !!crit });
+
+// ===================== BLOQUES =====================
+function bCond(tr) { return { id: 'cond', ic: '🧑‍✈️', t: 'Conductor apto', sn: true, d: tr ? 'Antes de revisar el tractor, revísate a ti.' : 'Antes de revisar el vehículo, revísate a ti. Llevas la vida de toda la cuadrilla.', items: [
+  I('descanso', '😴', 'Dormí bien y no ando con sueño', 'Mínimo 7 horas. Si te da sueño, para en un lugar seguro.', tr ? 'Un segundo dormido arriba del tractor basta para caer a un canal o volcar en una pendiente.' : 'Quedarse dormido al volante de madrugada es una de las principales causas de volcamiento de furgones agrícolas.', 1),
+  I('alcohol', '🚫', 'Sin alcohol ni drogas', 'Ni siquiera "una cervecita" de anoche si todavía se siente.', 'El alcohol baja los reflejos y es causal de despido y de pérdida del seguro.', 1),
+  I('remedios', '💊', 'Sin remedios que den sueño', 'Antialérgicos, relajantes o para dormir: si tomaste, avisa a tu jefatura.', 'Algunos remedios bajan los reflejos igual que el alcohol.', 1),
+  I('celular', '📵', 'No usaré el celular mientras manejo', 'Solo manos libres, o detenido en un lugar seguro.', 'Mirar el celular 3 segundos es avanzar a ciegas varios metros.'),
+  tr ? I('terreno', '🗺️', 'Conozco el terreno y sus peligros', 'Pendientes, canales, zanjas, hoyos, cables eléctricos bajos y personas trabajando en las hileras.', 'El volcamiento de tractor es la primera causa de muerte en el campo: casi siempre en pendientes o bordes de canal.', 1)
+     : I('ruta', '🗺️', 'Conozco la ruta y sus peligros', 'Caminos de tierra, puentes angostos, cruces de línea férrea, curvas y canales.', 'En caminos rurales los peligros aparecen de repente: conocerlos te da tiempo de reaccionar.')]}; }
+const B_EXT = { id: 'ext', ic: '🚶', t: 'Vuelta al vehículo', d: 'Camina alrededor antes de subirte. Dos minutos que evitan una pana o un accidente.', items: [
+  I('neum', '🛞', 'Neumáticos y tuercas, incluye repuesto', 'Sin cortes ni globos, con dibujo (mínimo 1,6 mm), bien inflados y sin tuercas sueltas.', 'Un neumático liso en camino de ripio o mojado hace patinar el furgón cargado de gente.', 1),
+  I('luces', '💡', 'Luces: altas, bajas, freno, intermitentes y retroceso', 'Enciéndelas y míralas (o pide ayuda a un compañero).', 'Salen de madrugada y vuelven al atardecer: si no te ven, te chocan.', 1),
+  I('fugas', '💧', 'Sin fugas bajo el vehículo', 'Mira el piso: aceite, petróleo, bencina, refrigerante o líquido de frenos.', 'Una fuga de frenos te deja sin control; una de combustible puede encenderse.', 1),
+  I('espejos', '🪞', 'Espejos', 'Completos, firmes, sin trizaduras y bien regulados.', 'Al bajar la cuadrilla hay gente caminando alrededor: el espejo te muestra dónde están.'),
+  I('parabrisas', '🪟', 'Parabrisas y limpiaparabrisas', 'Sin trizaduras frente a tus ojos; plumillas y agua funcionan.', 'Con neblina, lluvia o polvo del camino, ver bien es frenar a tiempo.'),
+  I('carroceria', '🚐', 'Carrocería y parachoques', 'Sin piezas sueltas, cortantes ni latas salidas.', 'Una lata suelta corta a quien sube o baja apurado.')]};
+const B_CAB = { id: 'cab', ic: '🎛️', t: 'Cabina y mandos', d: 'Ya arriba, con el motor encendido. Prueba todo antes de mover el vehículo.', items: [
+  I('frenos', '🛑', 'Frenos y freno de mano', 'Prueba a baja velocidad: pedal firme, no se va al fondo ni tira hacia un lado. El freno de mano sujeta en pendiente.', 'Con el furgón lleno, frena más largo. Si los frenos fallan, no hay cómo parar.', 1),
+  I('direccion', '🎯', 'Dirección', 'Sin juego, ruidos ni tirones al girar.', 'Una dirección con juego se descontrola en una curva de ripio.', 1),
+  I('cinturon', '🔒', 'Cinturón del conductor', 'Engancha, se recoge y no está cortado.', 'Tú das el ejemplo: si tú te lo pones, la cuadrilla también.', 1),
+  I('bocina', '📢', 'Bocina y alarma de retroceso', 'Ambas suenan fuerte.', 'En el campo hay trabajadores a pie alrededor del furgón al estacionar.', 1),
+  I('tablero', '📟', 'Tablero sin luces de falla', 'Ninguna luz roja queda encendida al partir.', 'El vehículo te avisa antes de una falla mayor: escúchalo.'),
+  I('asiento', '💺', 'Asiento del conductor', 'Firme y regulado a tu medida.', 'Un asiento suelto te aleja de los pedales en una frenada.')]};
+function bPas(t) { const mb = t === 'minibus'; return { id: 'pas', ic: '🧑‍🌾', t: 'Zona de pasajeros', d: 'Lo más importante: que cada trabajador viaje sentado, amarrado y sin herramientas encima.', items: [
+  I('asientos', '🪑', 'Asientos firmes y bien anclados', 'Muévelos: ninguno suelto, quebrado ni agregado (nada de bancas de madera o cajones).', 'En una frenada o volcamiento, un asiento suelto sale volando con la persona encima.', 1),
+  I('cinturones', '🔒', 'Cinturón en TODOS los asientos', 'Cada asiento tiene su cinturón: engancha, se suelta fácil y no está cortado ni amarrado.', 'En un volcamiento, quien va sin cinturón sale expulsado o golpea a los demás.', 1),
+  I('cupo', '🚷', 'Nadie viaja de pie ni en el pasillo', 'Solo tantos pasajeros como asientos. Nadie en el pasillo, en las rodillas de otro ni atrás con la carga.', 'Quien va de pie no tiene ninguna protección.', 1),
+  I('puertas', '🚪', 'Puertas de pasajeros', (mb ? 'Puerta de servicio' : 'Puerta corrediza') + ' abre y cierra bien, con traba firme. Nunca andar con la puerta abierta.', 'Una puerta que se abre en una curva bota a quien va al lado.', 1),
+  I('emergencia', '🆘', mb ? 'Salidas de emergencia y martillo rompevidrios' : 'Ventanas y salida de emergencia', mb ? 'Ventanas o escotilla de emergencia señalizadas, sin trabas, y martillos en su lugar.' : 'Las ventanas abren y la puerta trasera se puede abrir desde adentro.', 'Si el vehículo vuelca o cae a un canal, la gente tiene que poder salir rápido.', mb),
+  I('herramientas', '✂️', 'Herramientas fuera de la zona de pasajeros', 'Tijeras de podar, palas, serruchos y escaleras van en el maletero, parrilla o compartimiento separado, amarradas.', 'En una frenada, una tijera o una pala suelta se convierte en un proyectil contra la cabeza de alguien.', 1),
+  I('quimicos', '☠️', 'Sin agroquímicos ni combustible junto a las personas', 'Nunca llevar plaguicidas, fertilizantes, bencina ni bidones en el mismo espacio que los trabajadores.', 'Los vapores intoxican y un derrame quema la piel o se enciende.', 1),
+  I('peldano', '🪜', 'Peldaño y pasamanos de subida', 'Firmes, completos y sin barro.', 'Subir y bajar apurado y con barro: las caídas son de los accidentes más comunes.'),
+  I('interior', '💡', 'Luz interior, ventilación y calefacción', 'La luz interior enciende; las ventanas o el aire funcionan.', 'Salen de noche: con luz, la gente sube y se amarra sin tropezar. Ventilar evita que el conductor se adormezca.')]}; }
+const B_NIV = { id: 'niv', ic: '🛢️', t: 'Niveles', d: 'Con motor frío y en terreno plano.', items: [
+  I('aceite', '🛢️', 'Aceite de motor', 'Entre mínimo y máximo de la varilla.', 'Sin aceite, el motor se funde y quedas botado con la cuadrilla en el camino.'),
+  I('refrig', '🌡️', 'Refrigerante del radiador', 'Sobre el mínimo. Nunca abras la tapa en caliente.', 'El vapor del radiador quema gravemente la cara y las manos.'),
+  I('liqfrenos', '🧴', 'Líquido de frenos', 'Sobre el mínimo del depósito.', 'Si baja, algo está perdiendo y los frenos pueden fallar.', 1),
+  I('combustible', '⛽', 'Combustible sobre 1/4', 'Revisa el indicador del tablero.', 'Quedarse sin combustible en un camino rural de madrugada deja a todos expuestos.'),
+  I('bateria', '🔋', 'Batería', 'Bornes firmes y sin sulfato.', 'Un borne suelto apaga el motor y las luces en plena marcha.')]};
+const B_SEG = { id: 'seg', ic: '🧯', t: 'Elementos de seguridad', d: 'Lo que necesitas si algo sale mal en el camino.', items: [
+  I('extintor', '🧯', 'Extintor', 'Manómetro en verde, sello y pasador puestos, fecha vigente y bien sujeto.', 'Un amago en el motor se apaga en segundos… si el extintor sirve. Con gente adentro, cada segundo cuenta.', 1),
+  I('botiquin', '🩹', 'Botiquín', 'Completo y a mano.', 'En el campo la ambulancia puede tardar: los primeros minutos son clave.'),
+  I('triangulos', '⚠️', 'Triángulos o conos', 'Mínimo 2, en buen estado.', 'Si quedas en panne, avisan a los otros conductores.'),
+  I('chaleco', '🦺', 'Chaleco reflectante', 'Disponible en la cabina.', 'Bajarse en ruta de noche sin chaleco es ser invisible.'),
+  I('gata', '🔧', 'Gata, llave de ruedas y repuesto inflado', 'Disponibles y funcionando.', 'Sin ellas, un cambio de rueda se vuelve una maniobra improvisada al lado del camino.'),
+  I('lista', '📋', 'Lista de pasajeros del día', 'Sabes quiénes van contigo (nombre de cada trabajador).', 'En un accidente, rescate y la empresa necesitan saber cuántas personas iban y quiénes.'),
+  I('fono', '📞', 'Celular con carga y número de emergencia', 'Teléfono de tu jefatura y de la mutual guardados.', 'Pedir ayuda rápido salva vidas.')]};
+const B_ASEO = { id: 'aseo', ic: '🧽', t: 'Aseo y orden', d: 'El aseo no es estética: cada punto evita un accidente concreto.', aseo: true, items: [
+  I('a_cabina', '🧴', 'Cabina del conductor sin objetos sueltos', 'Nada en el piso ni sobre el tablero.', 'Una botella bajo el pedal de freno puede impedir frenar.'),
+  I('a_piso', '🥾', 'Piso y pasillo sin barro, fruta ni basura', 'Barre los restos de tierra, hojas, fruta y envases.', 'Con barro y fruta aplastada, el piso queda como jabón: la gente se resbala al subir.'),
+  I('a_asientos', '🪑', 'Asientos limpios y secos', 'Sin agua, barro ni restos.', 'Asientos mojados o sucios hacen que la gente se siente en otro lado o vaya de pie.'),
+  I('a_vidrios', '👀', 'Vidrios y espejos limpios', 'Por dentro y por fuera.', 'Ver bien y que te vean: el polvo y el barro encandilan con el sol bajo.'),
+  I('a_focos', '🔦', 'Focos limpios', 'Sin barro ni polvo.', 'Un foco con barro alumbra la mitad.')]};
+
+// ---------- TRACTOR ----------
+const T_EXT = { id: 'text', ic: '🚶', t: 'Vuelta al tractor', d: 'Con el motor apagado y freno de mano puesto.', items: [
+  I('neum', '🛞', 'Neumáticos y tuercas', 'Sin cortes ni globos, bien inflados (igual presión a cada lado) y sin tuercas sueltas.', 'Un neumático bajo de un lado inclina el tractor y facilita el volcamiento en pendiente.', 1),
+  I('fugas', '💧', 'Sin fugas', 'Aceite de motor, hidráulico, petróleo o refrigerante bajo el tractor.', 'El hidráulico caliente cerca del escape se enciende; el aceite en peldaños hace resbalar.', 1),
+  I('mangueras', '🧵', 'Mangueras y conexiones hidráulicas', 'Sin roces, grietas ni acoples sueltos.', 'Una manguera que revienta lanza aceite a presión: corta la piel como un cuchillo.'),
+  I('luces', '💡', 'Luces, baliza e intermitentes', 'Encienden todas, incluida la baliza.', 'Al cruzar o ir por el camino eres lento: la baliza avisa a los que vienen rápido.', 1),
+  I('peldanos', '🪜', 'Peldaños y pasamanos', 'Firmes, completos y sin barro.', 'Sube y baja siempre de frente al tractor y con 3 puntos de apoyo.'),
+  I('triangulo', '🔺', 'Triángulo de vehículo lento (naranjo) y espejos', 'Triángulo reflectante atrás, limpio; espejos completos.', 'En el camino público te tienen que identificar como vehículo lento desde lejos.')]};
+const T_CAB = { id: 'tcab', ic: '🛡️', t: 'Puesto del operador', d: 'Lo que te salva si el tractor vuelca.', items: [
+  I('rops', '🛡️', 'Barra antivuelco (ROPS) o cabina protectora', 'Instalada, levantada y sin golpes, grietas ni pernos faltantes.', 'Con barra antivuelco y cinturón puesto, un volcamiento se sobrevive. Sin ella, casi nunca.', 1),
+  I('cinturon', '🔒', 'Cinturón de seguridad', 'Engancha, se recoge y no está cortado. Siempre puesto con ROPS arriba.', 'La barra solo protege si te quedas dentro de su espacio: el cinturón te mantiene ahí.', 1),
+  I('nadie', '🚷', 'Nadie viaja en el tractor fuera del asiento', 'Ni en el guardabarros, ni en la barra de tiro, ni en el implemento.', 'Quien va colgado cae bajo las ruedas o del implemento.', 1),
+  I('frenos', '🛑', 'Frenos y freno de mano', 'Pedales unidos con su seguro para ir por camino; frena parejo y el de mano sujeta.', 'Con pedales sueltos a velocidad, un frenazo de un lado da vuelta el tractor.', 1),
+  I('direccion', '🎯', 'Dirección', 'Sin juego ni tirones.', 'Una dirección con juego te saca de la hilera hacia un canal o una persona.', 1),
+  I('arranque', '🔑', 'Arranque en neutro y bocina', 'Solo parte en neutro y con el embrague apretado; la bocina suena.', 'Si arranca en cambio, el tractor se mueve solo y atropella a quien está al lado.', 1),
+  I('tablero', '📟', 'Tablero sin luces de falla', 'Ninguna alarma al encender.', 'La máquina avisa antes de una falla mayor.')]};
+const T_ENG = { id: 'teng', ic: '🔗', t: 'Enganche y toma de fuerza', d: 'La toma de fuerza (TDF) gira con mucha fuerza: atrapa la ropa en un segundo.', items: [
+  I('tdf', '⚙️', 'Protección de la toma de fuerza (TDF)', 'Escudo o tapa de la TDF puesto en el tractor.', 'La TDF gira a más de 500 vueltas por minuto: enrolla la ropa y arrastra a la persona.', 1),
+  I('cardan', '🧷', 'Cardán con su protección completa', 'Funda plástica entera, sin cortes, con sus cadenitas para que no gire.', 'Un cardán sin protección es de los accidentes más graves del campo: amputaciones y muertes.', 1),
+  I('tres', '🔩', 'Enganche de tres puntos y pasadores', 'Brazos, tercer punto y pasadores con sus chavetas o seguros.', 'Un implemento que se suelta cae o se va contra quien está cerca.', 1),
+  I('barra', '🪝', 'Barra de tiro y carro/acoplado', 'Pasador con seguro y cadena de seguridad; carro con luces si sale al camino.', 'Engancha siempre en la barra de tiro, nunca alto: tirar desde arriba hace que el tractor se levante y vuelque hacia atrás.', 1),
+  I('hidraul', '🫗', 'Mandos hidráulicos del implemento', 'Suben y bajan bien; el implemento queda abajo al estacionar.', 'Un implemento levantado que baja de golpe aplasta pies y manos.')]};
+const T_NIV = { id: 'tniv', ic: '🛢️', t: 'Niveles y engrase', d: 'Con motor frío y en terreno plano.', items: [
+  I('aceite', '🛢️', 'Aceite de motor', 'Entre mínimo y máximo de la varilla.', 'Sin aceite, el motor se funde en minutos.'),
+  I('hidraulico', '🫗', 'Aceite hidráulico / transmisión', 'Dentro del rango en el visor o varilla.', 'Con poco aceite los mandos responden lento o de golpe.'),
+  I('refrig', '🌡️', 'Refrigerante', 'Sobre el mínimo. Nunca abras la tapa en caliente.', 'El vapor del radiador quema gravemente.'),
+  I('combustible', '⛽', 'Petróleo', 'Suficiente para la jornada. Carga con motor apagado.', 'Cargar con motor encendido o caliente es riesgo de incendio.'),
+  I('filtro', '🌪️', 'Filtro de aire y radiador limpios', 'Sin pasto, hojas ni polvo pegado.', 'Con el radiador tapado el motor se recalienta.'),
+  I('engrase', '🧈', 'Engrase', 'Puntos engrasados según la pauta.', 'Un pasador sin grasa se desgasta y se corta.')]};
+const T_SEG = { id: 'tseg', ic: '🧯', t: 'Seguridad del tractor', d: 'Para responder si algo sale mal.', items: [
+  I('extintor', '🧯', 'Extintor', 'Manómetro en verde, sello puesto, bien sujeto y a mano.', 'El pasto seco cerca del escape se enciende fácil.', 1),
+  I('botiquin', '🩹', 'Botiquín a mano', 'En el tractor o en el punto de trabajo.', 'Los primeros minutos son clave.'),
+  I('fono', '📞', 'Celular con carga y número de emergencia', 'Jefatura y mutual guardados.', 'Si vuelcas o te accidentas solo en el predio, tienes que poder pedir ayuda.'),
+  I('epp', '🦺', 'Tus EPP', 'Zapatos de seguridad, fonos o tapones, lentes, guantes y ropa ajustada (sin partes sueltas cerca de la TDF).', 'El ruido del tractor daña el oído y la ropa suelta se enrolla en el cardán.')]};
+const T_ASEO = { id: 'aseo', ic: '🧽', t: 'Aseo y orden', d: 'El aseo previene incendios y caídas.', aseo: true, items: [
+  I('a_motor', '🔥', 'Motor sin pasto, hojas ni barro acumulado', 'Retira lo acumulado cerca del escape.', 'El pasto seco sobre el escape caliente es la causa típica de incendio de tractores.'),
+  I('a_cabina', '🧴', 'Puesto del operador sin objetos sueltos', 'Nada en el piso ni bajo los pedales.', 'Un objeto bajo el pedal de freno impide frenar.'),
+  I('a_peldanos', '🪜', 'Peldaños sin barro ni aceite', 'Limpios y secos.', 'El pie se resbala justo al subir o bajar.'),
+  I('a_vidrios', '👀', 'Vidrios, espejos y focos limpios', 'Sin polvo ni barro.', 'Ver y ser visto.')]};
+// ---------- FUMIGACIÓN (solo si el tractor lleva equipo) ----------
+const F_EQ = { id: 'fum', ic: '💨', t: 'Equipo de fumigación', d: 'Nebulizadora o pulverizadora. Revísala con agua limpia antes de cargar el producto.', items: [
+  I('estanque', '🛢️', 'Estanque sin fugas, tapa y filtro de carga', 'Sin grietas ni goteo; tapa cierra bien.', 'Un goteo de plaguicida te moja la espalda o las piernas durante horas.', 1),
+  I('mangueras', '🧵', 'Mangueras, abrazaderas y conexiones', 'Sin grietas ni roces; abrazaderas apretadas.', 'Una manguera que revienta te baña en producto concentrado.', 1),
+  I('boquillas', '🚿', 'Boquillas y ventilador', 'Sin tapar ni goteando; protección del ventilador puesta.', 'Nunca destapes una boquilla soplándola con la boca: es intoxicación directa.', 1),
+  I('manometro', '⏲️', 'Manómetro y regulador de presión', 'Marca bien y la presión se regula.', 'Con exceso de presión revientan mangueras y aumenta la deriva.'),
+  I('aguaLimpia', '💧', 'Estanque o bidón de agua limpia para lavarte', 'Mínimo 15 litros de agua limpia y jabón en el tractor.', 'Si te salpica en los ojos o la piel, lavarte al tiro reduce la intoxicación.', 1),
+  I('hoja', '📄', 'Etiqueta y hoja de seguridad del producto', 'Sabes qué producto aplicas, su dosis y su período de reingreso.', 'En una intoxicación, el médico necesita saber qué producto fue.'),
+  I('letrero', '🚧', 'Letrero de aplicación y cuarteles sin gente', 'Letrero "Peligro: aplicación de plaguicidas" puesto; nadie trabajando en el cuartel ni en el de al lado.', 'La deriva alcanza a quienes trabajan cerca: se aplica sin personas en la zona.', 1),
+  I('viento', '🌬️', 'Viento y hora adecuados', 'Sin viento fuerte; lejos del comedor, canales y casas.', 'Con viento el producto se va a donde hay gente, agua o animales.')]};
+const F_EPP = { id: 'fepp', ic: '🥽', t: 'Protección del aplicador', d: 'Sin estos EPP no se aplica. El plaguicida entra por la piel, la boca y la respiración.', items: [
+  I('cabina', '🚜', 'Cabina cerrada con filtro de carbón activado (si tiene)', 'Puertas y ventanas cerradas; filtro vigente.', 'Una cabina abierta o con filtro vencido no protege nada.'),
+  I('mascara', '😷', 'Máscara con filtros para plaguicidas vigentes', 'Filtros de la fecha, bien ajustada (sin barba larga).', 'Respirar la neblina es la forma más rápida de intoxicarse.', 1),
+  I('traje', '🥼', 'Traje impermeable o buzo de aplicación', 'Sin roturas, mangas sobre los guantes y pantalón sobre las botas.', 'El producto que te moja la ropa sigue entrando por la piel todo el día.', 1),
+  I('guantes', '🧤', 'Guantes de nitrilo y botas de goma', 'Sin roturas.', 'Las manos son la parte que más se contamina al cargar el estanque.', 1),
+  I('ojos', '🥽', 'Antiparras o protector facial', 'Limpias y sin rayas.', 'Una salpicadura al preparar la mezcla puede dejarte ciego.', 1),
+  I('capacitado', '🎓', 'Estoy capacitado y autorizado como aplicador', 'Hiciste el curso y tu jefatura te autorizó para aplicar.', 'Aplicar sin capacitación pone en riesgo tu salud y la de toda la cuadrilla.', 1)]};
+
+// ---------- COMEDOR MÓVIL ----------
+const C_EST = { id: 'cest', ic: '🍽️', t: 'Comedor', d: 'Un lugar limpio y protegido para comer, lejos de las aplicaciones.', items: [
+  I('ubic', '📍', 'Bien ubicado y estable', 'Terreno firme y plano; si es carro, con calzos y patas estabilizadoras puestas.', 'Un carro que se mueve o se ladea aplasta a quien está cerca.', 1),
+  I('lejos', '☠️', 'Lejos de cuarteles en aplicación y de agroquímicos', 'Ningún cuartel cercano en aplicación; sin bodegas de plaguicidas al lado.', 'Comer donde llega la deriva es tragarse el plaguicida.', 1),
+  I('techo', '⛱️', 'Techo y protección de sol, lluvia y viento', 'Toldo o techo firme, sin roturas.', 'Los golpes de calor en temporada son frecuentes: comer a la sombra recupera al trabajador.'),
+  I('mesas', '🪑', 'Mesas y asientos para todos', 'Alcanzan para la cuadrilla, firmes y con cubierta lavable.', 'Si no alcanzan, la gente come en el suelo o arriba de los bins.', 1),
+  I('comida', '🧊', 'Lugar para guardar y calentar la comida (si corresponde)', 'Refrigerador o caja fría y microondas o anafe funcionando; enchufes y cables sin daño.', 'La comida que se descompone con el calor intoxica a la cuadrilla.'),
+  I('basura', '🗑️', 'Basureros con tapa', 'Suficientes, con bolsa y tapa.', 'La basura abierta trae moscas, avispas y roedores.')]};
+const C_AGUA = { id: 'cagua', ic: '💧', t: 'Estación de agua', d: 'Agua potable para tomar y para lavarse.', items: [
+  I('potable', '🚰', 'Agua potable suficiente para la jornada', 'Bidones o estanque con agua potable de origen conocido y cantidad para todos (en verano, mínimo 3 a 4 litros por persona para tomar).', 'Sin agua para tomar llegan la deshidratación y el golpe de calor.', 1),
+  I('dispensador', '🫗', 'Dispensador limpio, tapado y con llave', 'Sin lama, verdín ni tierra; se sirve por llave, sin meter la mano ni el jarro.', 'Un bidón sucio enferma del estómago a toda la cuadrilla.', 1),
+  I('vasos', '🥤', 'Vasos desechables o individuales', 'Nada de vaso o jarro compartido.', 'El vaso compartido contagia enfermedades.'),
+  I('lavamanos', '🧼', 'Lavamanos con agua, jabón y toalla desechable', 'Funciona, con jabón y toallas de papel.', 'Lavarse antes de comer saca la tierra y los restos de plaguicida de las manos.', 1),
+  I('sombra', '🌳', 'Agua a la sombra', 'Bidones protegidos del sol.', 'El agua al sol se calienta y crían bacterias.')]};
+const C_BANO = { id: 'cbano', ic: '🚻', t: 'Baños', d: 'Baños químicos limpios y suficientes: 1 por cada 10 trabajadores.', items: [
+  I('sexo', '🚺', 'Separados para hombres y mujeres', 'Con letrero en la puerta.', 'Privacidad y dignidad: es un derecho de cada trabajador y trabajadora.'),
+  I('limpios', '🧽', 'Limpios, desinfectados y vaciados', 'Sin olor fuerte ni rebalse; con registro de limpieza y vaciado al día.', 'Un baño sucio contagia enfermedades y nadie lo quiere usar.', 1),
+  I('papel', '🧻', 'Papel higiénico y lavamanos cerca', 'Papel en cada baño; lavamanos con jabón al lado.', 'Sin lavado de manos, lo del baño termina en la comida y la fruta.', 1),
+  I('puerta', '🚪', 'Puerta con seguro y estructura firme', 'Cierra por dentro; caseta firme, sin roturas ni riesgo de volcarse.', 'Una caseta suelta se vuelca con viento o al apoyarse.'),
+  I('cerca', '📍', 'Cerca de donde se trabaja y del comedor', 'A pocos minutos caminando, con acceso despejado.', 'Si están lejos, no se usan.')]};
+const C_SEG = { id: 'cseg', ic: '🧯', t: 'Seguridad del comedor', d: 'Para responder rápido si algo pasa.', items: [
+  I('extintor', '🧯', 'Extintor', 'Manómetro en verde, sello puesto, a la vista.', 'Un anafe o un cable recalentado puede iniciar un incendio.', 1),
+  I('botiquin', '🩹', 'Botiquín', 'Completo y a mano.', 'Cortes con tijera de podar, picaduras de abeja y golpes de calor se atienden aquí primero.'),
+  I('electrico', '⚡', 'Instalación eléctrica segura (si tiene)', 'Cables sin uniones con cinta, enchufes sin quemaduras, alargadores no pisados por vehículos.', 'Un cable pelado en terreno húmedo electrocuta.', 1),
+  I('info', '📋', 'Números de emergencia y punto de encuentro a la vista', 'Letrero con teléfono de la mutual, jefatura y punto de encuentro.', 'En una emergencia nadie se acuerda de los números.')]};
+const C_ASEO = { id: 'aseo', ic: '🧽', t: 'Aseo y orden', d: 'Limpio para comer tranquilo.', aseo: true, items: [
+  I('a_mesas', '🧴', 'Mesas y asientos limpios', 'Sin restos de comida ni tierra.', 'Los restos atraen avispas y moscas.'),
+  I('a_piso', '🧹', 'Piso y alrededores limpios', 'Sin basura, envases ni restos de fruta.', 'La basura en el suelo hace tropezar y atrae plagas.'),
+  I('a_basura', '🗑️', 'Basura retirada', 'Basureros sin rebalsar; bolsas retiradas al final del día.', 'La basura acumulada fermenta con el calor.'),
+  I('a_agua', '💧', 'Zona de agua sin barro ni pozas', 'Drenaje o piso firme bajo el lavamanos y los bidones.', 'El barro bajo el lavamanos hace resbalar y ensucia el agua.')]};
+
+function bloques() {
+  const t = S.tipo, c = CAT(); if (!t) return [];
+  if (c === 'veh') return [bCond(false), B_EXT, B_CAB, bPas(t), B_NIV, B_SEG, B_ASEO];
+  if (c === 'tractor') return [bCond(true), T_EXT, T_CAB, T_ENG, T_NIV].concat(S.fumiga === 'si' ? [F_EQ, F_EPP] : []).concat([T_SEG, T_ASEO]);
+  return [C_EST, C_AGUA, C_BANO, C_SEG, C_ASEO];
+}
+const NO_SALE = { veh: 'NO traslada personal', tractor: 'NO opera', comedor: 'NO se usa' };
+
+// ===================== VOZ =====================
+const VOZ = (() => {
+  const ss = window.speechSynthesis; let voz = null, muted = false, tok = 0;
+  try { muted = localStorage.getItem('cf_mute') === '1'; } catch (e) {}
+  const RARA = /eloquence|bad news|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|albert|fred|junior|ralph|grandma|grandpa|rocko|sandy|shelley|flo|reed/i;
+  const cal = v => (/natural|neural|online|premium|enhanced|mejorad/i.test(v.name) ? 40 : 0) + (/google/i.test(v.name) ? 15 : 0) + (/CL$/i.test(v.lang.replace('_', '-')) || /chile/i.test(v.name) ? 30 : /419|MX|US|AR|CO|PE/i.test(v.lang) ? 12 : 0);
+  const elegir = () => { if (!ss) return; const vs = ss.getVoices().filter(v => /^es/i.test(v.lang) && !RARA.test(v.name)); if (vs.length) voz = vs.sort((a, b) => cal(b) - cal(a))[0]; };
+  if (ss) { elegir(); ss.onvoiceschanged = elegir;
+    const unlock = () => { try { const u = new SpeechSynthesisUtterance(' '); u.volume = 0; ss.speak(u); } catch (e) {} document.removeEventListener('pointerdown', unlock, true); };
+    document.addEventListener('pointerdown', unlock, true); }
+  const DIC = [[/\bSOAP\b/g, 'soap'], [/\bTDF\b/g, 'toma de fuerza'], [/\bROPS\b/g, 'barra antivuelco'], [/\bEPP\b/g, 'elementos de protección'], [/\bA2\b/g, 'A 2'], [/\bA3\b/g, 'A 3'], [/\bRUT\b/g, 'rut'], [/\bkm\b/g, 'kilómetros'], [/\bmm\b/g, 'milímetros'], [/N°/g, 'número'], [/1\/4/g, 'un cuarto'], [/[«»"“”]/g, ''], [/\s·\s/g, ', ']];
+  const limpiar = t => DIC.reduce((x, [a, b]) => x.replace(a, b), String(t).replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+  function say(texto, el) {
+    const my = ++tok; document.querySelectorAll('.hablando').forEach(e => e.classList.remove('hablando'));
+    if (!ss || muted || !texto) return;
+    const u = new SpeechSynthesisUtterance(limpiar(texto)); if (voz) { u.voice = voz; u.lang = voz.lang; } else u.lang = 'es-ES'; u.rate = 1.02;
+    if (el) { el.classList.add('hablando'); u.onend = u.onerror = () => el.classList.remove('hablando'); }
+    try { ss.cancel(); setTimeout(() => { if (my === tok) { ss.resume(); ss.speak(u); } }, 120); } catch (e) {}
+  }
+  function stop() { tok++; try { ss && ss.cancel(); } catch (e) {} document.querySelectorAll('.hablando').forEach(e => e.classList.remove('hablando')); }
+  function setMute(m) { muted = m; try { localStorage.setItem('cf_mute', m ? '1' : '0'); } catch (e) {} if (m) stop(); }
+  return { say, stop, setMute, get muted() { return muted; } };
+})();
+function togVoz() { VOZ.setMute(!VOZ.muted); pintaVoz(); if (!VOZ.muted) VOZ.say('Voz activada. Te iré guiando en el chequeo.'); }
+function pintaVoz() { const b = document.getElementById('bVoz'); if (b) { b.textContent = VOZ.muted ? '🔇' : '🔊'; b.classList.toggle('off', VOZ.muted); } }
+function oirItem(k) { const [bid, iid] = k.split('.'), b = bloques().find(x => x.id === bid), it = b && b.items.find(x => x.id === iid); if (!it) return;
+  VOZ.say(it.t + '. ' + it.tip + ' ¿Por qué importa? ' + it.why + (it.crit ? ' Este punto es crítico: si falla, ' + NO_SALE[CAT()].toLowerCase() + '.' : ''), document.getElementById('it-' + k.replace('.', '-'))); }
+function vozPantalla() {
+  const p = S.paso, c = CAT();
+  if (p === 0) return VOZ.say('Hola. Vamos a hacer el chequeo de seguridad. Escribe tu rut y toca entrar.');
+  if (p === 1) return VOZ.say('Hola ' + S.persona.nombre.split(' ')[0] + '. ¿Qué vas a revisar hoy? Elige una opción.');
+  if (p === 2) return VOZ.say(c === 'veh' ? 'Elige la patente. Luego indica cuántos asientos tiene y cuántos trabajadores vas a llevar.' : c === 'tractor' ? 'Elige el tractor y cuéntanos si hoy lleva equipo de fumigación.' : 'Elige el comedor, dónde está y cuántos trabajadores lo usan.');
+  if (p < pasoResumen()) { const b = bloques()[p - 3]; return VOZ.say('Parte ' + (p - 2) + ' de ' + nB() + ': ' + b.t + '. ' + (b.d || '') + (b.sn ? ' Responde sí o no con honestidad.' : ' Marca cada punto. Si tienes dudas, toca escuchar.')); }
+  if (p === pasoResumen()) { const E = evaluar(); return VOZ.say('Resultado: ' + E.resultado + '. ' + E.mensaje + (E.al.length ? ' Se encontraron ' + E.al.length + ' alertas.' : ' Sin alertas.')); }
+  if (p === pasoReporte()) return VOZ.say('Último paso. El informe le llega a Daniel, Juan y Alexandra. Firma con el dedo y toca enviar.');
+}
+
+// ===================== ESTADO =====================
+const VACIO = () => ({ tipo: '', patente: '', nuevoEq: false, marca: '', anio: '', fotoEq: '', asientos: '', pasajeros: '', trab: '', banos: '', fumiga: '', fumiEq: '', producto: '',
+  km: '', prox: '', soap: '', permiso: '', rt: '', eqInfo: null, res: {}, com: {}, fotos: {}, obs: '', firma: '', fin: null, envio: '' });
+const S = Object.assign({ paso: 0, persona: null, enc: [], equipos: [], lugar: '', rep: [], enviando: false }, VACIO());
+const LS = 'cf_borrador';
+const guarda = () => { try { const c = Object.assign({}, S); delete c.fin; delete c.enviando; localStorage.setItem(LS, JSON.stringify(c)); } catch (e) {} };
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const patKey = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+const aFecha = s => { let m = String(s || '').match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/); if (m) return new Date(+m[3], +m[2] - 1, +m[1]); m = String(s || '').match(/(\d{4})-(\d{2})-(\d{2})/); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; };
+const dd = d => d ? String(d.getDate()).padStart(2, '0') + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + d.getFullYear() : '';
+const dias = s => { const d = aFecha(s); if (!d) return null; const h = new Date(); h.setHours(0, 0, 0, 0); return Math.round((d - h) / 864e5); };
+const num = s => Number(String(s || '').replace(/[^\d]/g, '')) || 0;
+const fmtN = n => Math.round(n).toLocaleString('es-CL');
+const nB = () => bloques().length;
+const pasoResumen = () => 3 + nB(), pasoReporte = () => 4 + nB(), pasoFin = () => 5 + nB();
+const RUTAS = { apiInicio: () => ({ api: 'inicio' }), apiOperador: id => ({ api: 'operador', id }), apiEquipo: p => ({ api: 'equipo', p }) };
+async function api(fn, arg) {
+  let r;
+  if (fn === 'apiGuardar') r = await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(arg) });
+  else r = await fetch(SCRIPT_URL + '?' + new URLSearchParams(RUTAS[fn](arg)));
+  return r.json();
+}
+
+// ===================== PANTALLAS =====================
+function render() {
+  const p = S.paso, app = $('#app'), foot = $('#foot');
+  $('#bar').style.width = Math.min(100, Math.round(p / pasoFin() * 100)) + '%';
+  $('#sub').textContent = S.tipo ? TIPOS[S.tipo].t.toUpperCase() + (S.patente ? ' · ' + patKey(S.patente) : '') : 'Seguridad antes de partir';
+  foot.classList.toggle('hide', p === 0 || p >= pasoFin());
+  $('#bNext').textContent = p === pasoReporte() ? (S.enviando ? 'Enviando…' : '📤 Enviar informe') : 'Siguiente →';
+  $('#bNext').disabled = S.enviando;
+  if (p === 0) app.innerHTML = vInicio();
+  else if (p === 1) app.innerHTML = vTipo();
+  else if (p === 2) app.innerHTML = vEquipo();
+  else if (p < pasoResumen()) app.innerHTML = vBloque(bloques()[p - 3]);
+  else if (p === pasoResumen()) app.innerHTML = vResumen();
+  else if (p === pasoReporte()) { app.innerHTML = vReporte(); firmaInit(); }
+  else app.innerHTML = vFin();
+  window.scrollTo(0, 0); guarda(); pintaVoz(); guia();
+  if (S._ultVoz !== p + '|' + S.tipo) { S._ultVoz = p + '|' + S.tipo; vozPantalla(); }
+}
+const HERO = `<svg class="hero" viewBox="0 0 300 140" aria-label="Campo con furgón, tractor y comedor">
+<rect x="0" y="0" width="300" height="140" rx="16" fill="#DDF6FF"/><circle cx="262" cy="26" r="14" fill="#FCD34D"/>
+<path d="M0 90q75-26 150-6t150-8v64H0z" fill="#86C67C"/><path d="M0 108q80-18 160-2t140-6v40H0z" fill="#5FA052"/>
+<g transform="translate(8 66)"><rect x="0" y="6" width="44" height="24" rx="3" fill="#fff" stroke="#0B1A8C" stroke-width="2"/><path d="M-2 6l24-6 24 6" fill="#1225FD"/><rect x="5" y="11" width="13" height="8" fill="#BFE9FF"/><rect x="22" y="11" width="13" height="8" fill="#BFE9FF"/><circle cx="10" cy="32" r="4" fill="#263238"/><circle cx="34" cy="32" r="4" fill="#263238"/><rect x="50" y="8" width="10" height="24" rx="2" fill="#3BDAFF"/></g>
+<g transform="translate(86 52)"><path d="M0 8h96l26 16 16 7v21H0z" fill="#fff" stroke="#0B1A8C" stroke-width="3"/><path d="M98 12l22 14H98z" fill="#BFE9FF"/>
+<g fill="#BFE9FF"><rect x="8" y="15" width="20" height="13" rx="2"/><rect x="34" y="15" width="20" height="13" rx="2"/><rect x="60" y="15" width="20" height="13" rx="2"/></g>
+<g fill="#7C5A3A"><circle cx="18" cy="23" r="4"/><circle cx="44" cy="23" r="4"/><circle cx="70" cy="23" r="4"/></g>
+<rect x="0" y="35" width="138" height="5" fill="#1225FD"/><circle cx="30" cy="54" r="11" fill="#263238"/><circle cx="30" cy="54" r="5" fill="#B0BEC5"/><circle cx="112" cy="54" r="11" fill="#263238"/><circle cx="112" cy="54" r="5" fill="#B0BEC5"/></g>
+<g transform="translate(236 70)"><path d="M10 0h18v18H10z" fill="none" stroke="#263238" stroke-width="3"/><path d="M6 18h40l4 8H2z" fill="#2E7D32"/><circle cx="14" cy="30" r="11" fill="#263238"/><circle cx="14" cy="30" r="4" fill="#F59E0B"/><circle cx="44" cy="34" r="7" fill="#263238"/></g>
+</svg>`;
+function vInicio() {
+  if (/PEGAR_AQUI/.test(SCRIPT_URL)) return `<div class="card center">${HERO}<h2>App en preparación</h2><p class="m">Falta conectar el servidor. Avísale a Daniel Zunino.</p></div>`;
+  let bor = null, ult = ''; try { bor = JSON.parse(localStorage.getItem(LS) || 'null'); ult = localStorage.getItem('cf_rut') || ''; } catch (e) {}
+  const hay = bor && bor.persona && bor.tipo && bor.paso > 1 && bor.paso < 20;
+  return `<div class="card center"><div>${HERO}</div><h2>Chequeo de seguridad</h2><p class="m">Furgones, tractores y comedores. Unos 5 minutos que cuidan a toda la cuadrilla.</p></div>
+  ${hay ? `<div class="card"><h3>📝 Tienes un chequeo sin terminar</h3><p class="m">${esc(bor.persona.nombre)} · ${esc(TIPOS[bor.tipo] ? TIPOS[bor.tipo].t : '')} ${esc(patKey(bor.patente))}</p><button class="btn" id="bSeguir" onclick="seguir()">Continuar donde quedé</button><div style="height:8px"></div><button class="btn gh" onclick="descartar()">Empezar uno nuevo</button></div>` : ''}
+  <div class="card"><h3>🪪 Escribe tu RUT</h3><p class="m">Sin puntos ni guion, se ordena solo.</p>
+  <input id="rut" inputmode="text" autocomplete="off" autocapitalize="characters" placeholder="12.345.678-9" value="${esc(ult)}" oninput="mascaraRut(this)" onkeydown="if(event.key==='Enter')entrarRut()">
+  <div style="height:10px"></div><button class="btn am" id="bRut" onclick="entrarRut()">Entrar →</button><div id="errRut" class="info x hide"></div>
+  <div class="nuevo hide" id="inscribir" style="margin-top:14px"><b>📝 No te encontramos en la nómina</b><p class="m" style="margin:4px 0 10px">Inscríbete en la nómina de COMFRUT con este formulario y <b>espera la autorización</b>. Cuando te activen, entras con tu RUT.</p>${S.form ? `<a class="btn am" id="bInscribir" href="${esc(S.form)}" target="_blank" style="text-decoration:none">Inscribirme en la nómina</a>` : '<b>Pídele el formulario a tu jefatura.</b>'}</div></div>
+  <div class="pie">Creado por Daniel Zunino · Integra Prevención SpA</div>`;
+}
+function mascaraRut(el) { const r = el.value.replace(/[^0-9kK]/g, '').toUpperCase().slice(0, 9); el.value = r.length < 2 ? r : r.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '-' + r.slice(-1); $('#errRut').classList.add('hide'); $('#inscribir').classList.add('hide'); S._noRut = false; guia(); }
+function rutValido(r) { r = String(r || '').replace(/[^0-9kK]/g, '').toUpperCase(); if (r.length < 8) return false; let s = 0, m = 2; for (let i = r.length - 2; i >= 0; i--) { s += +r[i] * m; m = m === 7 ? 2 : m + 1; } const dv = 11 - s % 11; return (dv === 11 ? '0' : dv === 10 ? 'K' : String(dv)) === r.slice(-1); }
+function seguir() { try { Object.assign(S, JSON.parse(localStorage.getItem(LS))); S.enviando = false; } catch (e) {} render(); }
+function descartar() { try { localStorage.removeItem(LS); } catch (e) {} render(); }
+function entrarRut() {
+  const v = ($('#rut') || {}).value || '', err = $('#errRut');
+  if (!rutValido(v)) { err.textContent = 'Ese RUT no es válido. Revisa los números y el dígito verificador (ej: 12.345.678-9).'; err.className = 'info x'; VOZ.say('Ese rut no es válido. Revísalo.'); guia(true); return; }
+  elegirPersona(v);
+}
+async function elegirPersona(id) {
+  const err = $('#errRut'), b = $('#bRut'); b.disabled = true; b.textContent = 'Buscando…';
+  const libera = () => { b.disabled = false; b.textContent = 'Entrar →'; };
+  try {
+    const d = await api('apiOperador', id);
+    if (!d.ok) { libera();
+      if (d.error === 'pendiente') { err.innerHTML = '⏳ <b>' + esc(d.nombre || '') + ', tu inscripción está esperando autorización.</b><br>Ya les avisamos a Daniel y Alexandra. Cuando te activen, vuelve a entrar con tu RUT.'; err.className = 'info w'; VOZ.say('Tu inscripción está esperando autorización. Ya avisamos para que te activen.'); }
+      else if (d.error === 'inactivo') { err.innerHTML = '🚫 <b>' + esc(d.nombre || '') + ', estás INACTIVO en la nómina.</b><br>Habla con tu jefatura o con Alexandra Barrios.'; err.className = 'info x'; VOZ.say('Estás inactivo en la nómina. Habla con tu jefatura.'); }
+      else { err.textContent = 'No encontramos ese RUT en la nómina de COMFRUT.'; err.className = 'info x'; $('#inscribir').classList.remove('hide'); S._noRut = true; VOZ.say('No encontramos ese rut en la nómina. Inscríbete con el formulario y espera la autorización.'); }
+      guia(true); return; }
+    try { localStorage.setItem('cf_rut', $('#rut').value); } catch (e) {}
+    Object.assign(S, VACIO(), { persona: d.persona, enc: d.encargados || [], equipos: d.equipos || [] });
+    S.rep = S.enc.map(g => g.key);
+    S.paso = 1; render();
+  } catch (e) { err.textContent = 'Sin conexión con el servidor. Revisa tu señal e intenta de nuevo.'; err.className = 'info x'; libera(); }
+}
+function sugerido(t) { const c = (S.persona.cargo || '').toLowerCase();
+  if (t === 'tractor') return /tractor|maquin|aplicad|fumig/.test(c);
+  if (t === 'comedor') return /supervis|jefe|capataz|encargad|administr|cuadrilla|prevenci/.test(c);
+  if (t === 'minibus') return (S.persona.lic || []).indexOf('A3') >= 0;
+  return /conductor|chofer/.test(c); }
+function licEstado() {
+  const c = CAT(); if (c === 'comedor') return { nivel: '' };
+  const l = S.persona.lic || [], need = licNecesaria(), tiene = need.some(x => l.indexOf(x) >= 0), dv = dias(S.persona.licVence), asi = num(S.asientos);
+  if (!l.length) return { c: 'b-w', t: '⚠️ Licencia no registrada en la nómina', nivel: 'Documento' };
+  if (dv != null && dv < 0) return { c: 'b-x', t: '❌ Licencia vencida el ' + S.persona.licVence + ': no puedes conducir', nivel: c === 'tractor' ? 'Documento' : 'Crítica' };
+  if (c === 'tractor') { if (!tiene) return { c: 'b-w', t: '⚠️ Sin licencia clase D: no puedes salir con el tractor a camino público', nivel: 'Documento' }; }
+  else if (asi && !tiene) { if (l.indexOf('A1') >= 0 && asi <= 16) return { c: 'b-w', t: '⚠️ Licencia A1: confirma que te habilita para ' + asi + ' pasajeros (se exige ' + need.join(' o ') + ')', nivel: 'Documento' };
+    return { c: 'b-x', t: '❌ Tu licencia (' + l.join(', ') + ') no sirve para ' + asi + ' pasajeros: se exige ' + need.join(' o '), nivel: 'Crítica' }; }
+  if (dv != null && dv <= DIAS_AVISO) return { c: 'b-w', t: '⚠️ Licencia vence en ' + dv + ' días', nivel: 'Documento' };
+  return { c: 'b-ok', t: '✅ Licencia ' + l.join(', ') + ' vigente' + (S.persona.licVence ? ' hasta ' + S.persona.licVence : ''), nivel: '' };
+}
+function vTipo() {
+  const p = S.persona, orden = Object.keys(TIPOS);
+  return `<div class="card"><h2>¡Hola, ${esc(p.nombre.split(' ')[0])}! 👋</h2>
+  <div class="mut small">${esc(p.cargo)} · ${esc(p.empresa)}</div><div style="margin-top:8px">
+  <span class="badge b-n">🪪 ${p.lic && p.lic.length ? 'Licencia ' + esc(p.lic.join(', ')) : 'Sin licencia registrada'}</span>${p.licVence ? `<span class="badge ${dias(p.licVence) < 0 ? 'b-x' : 'b-n'}">Vence ${esc(p.licVence)}</span>` : ''}</div></div>
+  <div class="card"><h3>¿Qué vas a revisar?</h3><div class="eqs">${orden.map(t => `<button class="eq ${S.tipo === t ? 'sel' : ''}" onclick="elegirTipo('${t}')">${SVG[t]}<div><b>${TIPOS[t].t}</b><span>${TIPOS[t].d}</span>${sugerido(t) ? '<span class="sug">★ Sugerido según tu cargo</span>' : ''}</div></button>`).join('')}</div></div>`;
+}
+function elegirTipo(t) { if (S.tipo !== t) Object.assign(S, VACIO(), { tipo: t }); S.paso = 2; render(); }
+function stpH(k, lbl, ph) { return `<div><label class="l">${lbl}</label><div class="stp"><button onclick="stp('${k}',-1)">−</button><input id="in-${k}" inputmode="numeric" value="${esc(S[k])}" placeholder="${ph}" oninput="S['${k}']=this.value.replace(/\\D/g,'').slice(0,3);this.value=S['${k}'];pintaCupo()"><button onclick="stp('${k}',1)">+</button></div></div>`; }
+function stp(k, d) { S[k] = String(Math.max(0, num(S[k]) + d)); const el = document.getElementById('in-' + k); if (el) el.value = S[k]; pintaCupo(); }
+function banosNec() { return Math.ceil(num(S.trab) / 10); }
+function vCupo() {
+  const c = CAT();
+  if (c === 'veh') { const a = num(S.asientos), p = num(S.pasajeros); if (!a) return '';
+    const col = p > a ? 'var(--bad)' : p === a ? 'var(--warn)' : 'var(--ok)', w = Math.min(100, Math.round(p / a * 100));
+    return `<div class="cupo"><span style="color:${col}">${p} / ${a}</span><div class="bar"><i style="width:${w}%;background:${col}"></i></div></div>${p > a ? '<div class="info x">🛑 <b>Sobrecupo:</b> llevas más trabajadores que asientos. Nadie puede viajar de pie: el vehículo NO sale así.</div>' : ''}
+    <div style="margin-top:8px"><span class="badge ${licEstado().c}">${esc(licEstado().t)}</span></div>`; }
+  if (c === 'comedor') { const t = num(S.trab), b = num(S.banos), n = banosNec(); if (!t) return '';
+    return b >= n ? `<div class="info g">✅ <b>${b} baño(s) para ${t} trabajadores.</b> Se necesitan ${n} (1 por cada 10).</div>` : `<div class="info x">🛑 <b>Faltan baños:</b> hay ${b} y se necesitan <b>${n}</b> para ${t} trabajadores (1 por cada 10). Pide más a tu jefatura.</div>`; }
+  return '';
+}
+function pintaCupo() { const e = document.getElementById('cupo'); if (e) e.innerHTML = vCupo(); guarda(); guia(); }
+function setFum(v) { S.fumiga = v; if (v === 'no') { S.fumiEq = ''; S.producto = ''; } const sc = window.scrollY; render(); window.scrollTo(0, sc); guia(true); VOZ.say(v === 'si' ? 'Bien. Se agregan al chequeo el equipo de fumigación y tu protección como aplicador.' : 'Listo, chequeo de tractor sin fumigación.'); }
+function vEquipo() {
+  const T = TIPOS[S.tipo], c = T.cat, lista = S.equipos.filter(x => x.t === S.tipo).sort((a, b) => a.p.localeCompare(b.p)), info = S.eqInfo;
+  let h = `<div class="card"><div class="bh"><div class="ic">${{ veh: '🚐', tractor: '🚜', comedor: '🍽️' }[c]}</div><div><h2>${c === 'comedor' ? 'Datos del comedor' : c === 'tractor' ? 'Datos del tractor' : 'Datos del vehículo'}</h2><div class="mut small">${T.t}</div></div></div>
+  <label class="l">${T.idL}</label>
+  <select id="selEq" onchange="pickPat(this.value)"><option value="">— Elige de la lista —</option>${lista.map(x => `<option value="${esc(x.p)}" ${!S.nuevoEq && patKey(S.patente) === patKey(x.p) ? 'selected' : ''}>${esc(x.p)}${x.m ? ' · ' + esc(x.m) : ''}${x.e === 'Pendiente' ? ' · ⏳ por verificar' : ''}${x.al ? ' · ⚠️' + x.al : ''}</option>`).join('')}
+  <option value="__nuevo" ${S.nuevoEq ? 'selected' : ''}>➕ No está en la lista: agregarlo</option></select>
+  ${!lista.length && !S.nuevoEq ? '<div class="info">Aún no hay ninguno inscrito. Elige <b>➕ No está en la lista</b> para agregarlo.</div>' : ''}
+  ${S.nuevoEq ? vNuevo() : `<div id="eqinfo">${info ? vEqInfo(info) : ''}</div>`}
+  <label class="l">${c === 'veh' ? 'Ruta o recorrido' : 'Predio, campo o cuartel'}</label><input id="in-lugar" value="${esc(S.lugar)}" placeholder="${c === 'veh' ? 'Ej: Cabrero → Predio Las Rosas' : 'Ej: Predio Las Rosas, cuartel 4'}" oninput="S.lugar=this.value;guarda()"></div>`;
+  if (c === 'veh') h += `<div class="card"><h3>🧑‍🌾 Pasajeros de hoy</h3><p class="m">Cuenta los asientos para pasajeros (sin contar el tuyo) y cuántos trabajadores vas a llevar.</p>
+    ${stpH('asientos', '🪑 Asientos de pasajeros', 'Ej: 14')}${stpH('pasajeros', '🧑‍🌾 Trabajadores a llevar hoy', 'Ej: 12')}<div id="cupo">${vCupo()}</div></div>`;
+  if (c === 'tractor') h += `<div class="card"><h3>💨 ¿Hoy el tractor trabaja con equipo de fumigación?</h3><p class="m">Si dices que sí, se agregan al chequeo el equipo y tu protección como aplicador.</p>
+    <div class="sino" id="sinoFum"><button class="${S.fumiga === 'si' ? 'on' : ''}" onclick="setFum('si')"><span class="x">💨</span>Sí, fumiga</button><button class="${S.fumiga === 'no' ? 'on' : ''}" onclick="setFum('no')"><span class="x">🚜</span>No</button></div>
+    ${S.fumiga === 'si' ? `<label class="l">Equipo (nebulizadora / pulverizadora)</label><input id="in-fumiEq" value="${esc(S.fumiEq)}" placeholder="Ej: Nebulizadora Parada 2000 L" oninput="S.fumiEq=this.value;guarda()">
+    <label class="l">Producto a aplicar (opcional)</label><input value="${esc(S.producto)}" placeholder="Ej: nombre comercial del producto" oninput="S.producto=this.value;guarda()">` : ''}
+    <div style="margin-top:10px"><span class="badge ${licEstado().c}">${esc(licEstado().t)}</span></div></div>`;
+  if (c === 'comedor') h += `<div class="card"><h3>🧑‍🌾 Trabajadores y baños</h3><p class="m">Cuántos trabajadores usan este comedor hoy y cuántos baños hay.</p>
+    ${stpH('trab', '🧑‍🌾 Trabajadores que lo usan hoy', 'Ej: 35')}${stpH('banos', '🚻 Baños disponibles', 'Ej: 4')}<div id="cupo">${vCupo()}</div></div>`;
+  if (T.med) h += `<div class="card"><h3>${T.med === 'km' ? '🛣️ Kilometraje' : '⏱️ Horómetro'}</h3><div class="row2"><div><label class="l">${T.med === 'km' ? 'Kilometraje actual' : 'Horómetro actual'}</label><input id="in-km" inputmode="numeric" value="${esc(S.km)}" placeholder="${T.med === 'km' ? 'km' : 'horas'}" oninput="S.km=this.value.replace(/[^\\d]/g,'');this.value=S.km;pintaInd()"></div>
+    <div><label class="l">Próximo cambio de aceite</label><input inputmode="numeric" value="${esc(S.prox)}" placeholder="${T.med === 'km' ? 'km del adhesivo' : 'horas del adhesivo'}" oninput="S.prox=this.value.replace(/[^\\d]/g,'');this.value=S.prox;pintaInd()"></div></div><div id="ind">${vInd()}</div></div>`;
+  if (c === 'veh') h += `<div class="card"><h3>📄 Documentos del vehículo</h3><p class="m">Fecha de vencimiento de cada uno (mira los papeles en la guantera). Solo números: 31032027.</p>
+  ${[['soap', 'Seguro obligatorio (SOAP)'], ['permiso', 'Permiso de circulación'], ['rt', 'Revisión técnica']].map(([k, t]) =>
+    `<label class="l">${t}</label><div class="fecha-row"><input id="f-${k}" class="fecha" data-k="${k}" inputmode="numeric" maxlength="10" placeholder="DD-MM-AAAA" value="${esc(S[k])}" oninput="mascaraFecha(this)"><span id="b-${k}">${badgeFecha(S[k])}</span></div>`).join('')}</div>`;
+  return h;
+}
+function badgeFecha(v) { const dv = dias(v); return dv == null ? '' : dv < 0 ? '<span class="badge b-x">VENCIDO</span>' : dv <= DIAS_AVISO ? '<span class="badge b-w">vence en ' + dv + ' días</span>' : '<span class="badge b-ok">✅ vigente</span>'; }
+function mascaraFecha(el) {
+  const d = el.value.replace(/\D/g, '').slice(0, 8); el.value = d.length > 4 ? d.slice(0, 2) + '-' + d.slice(2, 4) + '-' + d.slice(4) : d.length > 2 ? d.slice(0, 2) + '-' + d.slice(2) : d;
+  const k = el.dataset.k, f = aFecha(el.value), ok = d.length === 8 && f && dd(f) === el.value && f.getFullYear() > 2000 && f.getFullYear() < 2100;
+  S[k] = ok ? el.value : ''; $('#b-' + k).innerHTML = ok ? badgeFecha(el.value) : (d.length === 8 ? '<span class="badge b-x">fecha no válida</span>' : '');
+  guarda(); if (ok) { const sig = { soap: 'f-permiso', permiso: 'f-rt' }[k]; if (sig && $('#' + sig) && !$('#' + sig).value) $('#' + sig).focus(); else el.blur(); } guia(ok);
+}
+function vNuevo() {
+  const T = TIPOS[S.tipo];
+  return `<div class="nuevo"><b>🆕 Agregar ${T.cat === 'comedor' ? 'comedor' : T.cat === 'tractor' ? 'tractor' : 'vehículo'}</b><p class="m" style="margin:4px 0 0">Haz el chequeo igual. A Daniel Zunino le llegará una alerta para verificarlo e inscribirlo.</p>
+  <label class="l">${T.idL}</label><input id="in-pat" value="${esc(S.patente)}" placeholder="${T.ej}" style="text-transform:uppercase" oninput="S.patente=this.value;guarda()">
+  <div class="row2"><div><label class="l">${T.cat === 'comedor' ? 'Descripción' : 'Marca / modelo'}</label><input id="in-marca" value="${esc(S.marca)}" placeholder="${T.mm}" oninput="S.marca=this.value;guarda()"></div>
+  <div><label class="l">Año (si sabes)</label><input inputmode="numeric" value="${esc(S.anio)}" placeholder="Ej: 2019" oninput="S.anio=this.value.replace(/\\D/g,'').slice(0,4);this.value=S.anio;guarda()"></div></div>
+  <div class="ph"><label>📷 ${S.fotoEq ? 'Cambiar foto' : 'Sacar foto'}<input type="file" accept="image/*" capture="environment" class="hide" onchange="fotoEquipo(this)"></label>${S.fotoEq ? `<img src="data:image/jpeg;base64,${S.fotoEq}">` : '<span class="small mut">Ayuda a verificarlo</span>'}</div></div>`;
+}
+function indicadores() {
+  const T = TIPOS[S.tipo], u = T.med, o = { u }; if (!u) return o;
+  const km = num(S.km), px = num(S.prox), U = S.eqInfo && S.eqInfo.ultimo;
+  const kmAnt = U ? num(U.km) : 0, fAnt = U ? aFecha(U.f) : null;
+  if (km && kmAnt && km > kmAnt) { o.rec = km - kmAnt; const d = fAnt ? Math.max(1, Math.round((Date.now() - fAnt) / 864e5)) : 0; if (d) o.porDia = o.rec / d; }
+  if (fAnt) o.desde = Math.round((Date.now() - fAnt) / 864e5);
+  if (km && kmAnt && km < kmAnt) o.menor = kmAnt;
+  if (km && px) { o.faltan = px - km; o.faltanTxt = o.faltan > 0 ? 'Faltan ' + fmtN(o.faltan) + ' ' + u : 'Vencido hace ' + fmtN(-o.faltan) + ' ' + u;
+    o.vida = Math.max(0, Math.min(1, o.faltan / INTERVALO[u]));
+    if (o.faltan > 0 && o.porDia) { o.fechaEst = dd(new Date(Date.now() + o.faltan / o.porDia * 864e5)); o.diasEst = Math.round(o.faltan / o.porDia); } }
+  return o;
+}
+function vInd() {
+  if (!S.tipo || !TIPOS[S.tipo].med) return ''; const I = indicadores(), rows = [];
+  if (I.faltanTxt) { const c = I.faltan <= 0 ? 'var(--bad)' : I.faltan <= AVISO[I.u] ? 'var(--warn)' : 'var(--ok)';
+    rows.push(`<div><b>🛢️ Cambio de aceite:</b> <b style="color:${c}">${I.faltanTxt}</b>${I.fechaEst ? '<br><span class="small mut">Al ritmo actual toca aprox. el <b>' + I.fechaEst + '</b> (en ' + I.diasEst + ' días)</span>' : ''}
+      <div style="height:9px;background:#E2E8F0;border-radius:9px;margin-top:6px;overflow:hidden"><i style="display:block;height:100%;width:${Math.round(I.vida * 100)}%;background:${c}"></i></div></div>`); }
+  if (I.menor) rows.push(`<div style="color:var(--warn)">⚠️ El ${I.u === 'km' ? 'kilometraje' : 'horómetro'} es menor al del último chequeo (${fmtN(I.menor)}). Revísalo.</div>`);
+  if (I.rec) rows.push(`<div>📍 <b>Desde el último chequeo:</b> ${fmtN(I.rec)} ${I.u}${I.porDia ? ' (' + fmtN(I.porDia) + ' ' + I.u + '/día)' : ''}</div>`);
+  return rows.length ? `<div class="info" style="display:grid;gap:10px">${rows.join('')}</div>` : '';
+}
+function pintaInd() { const e = document.getElementById('ind'); if (e) e.innerHTML = vInd(); guarda(); }
+function vEqInfo(i) {
+  if (i.cargando) return '<div class="info">Buscando historial…</div>';
+  let h = '';
+  const e = S.equipos.find(x => patKey(x.p) === patKey(S.patente));
+  if (e && e.hoy) h += `<div class="info w">ℹ️ Ya fue chequeado hoy por <b>${esc(e.hoy)}</b>. Si cambió el responsable, haz tu propio chequeo igual.</div>`;
+  if (!i.nuevo && i.ultimo) { const u = i.ultimo; h += `<div class="info"><b>Último chequeo:</b> ${esc(u.f || '—')} ${u.res ? '· ' + esc(u.res) : ''}${u.op ? ' · ' + esc(u.op) : ''}${u.km ? '<br>Último registro: ' + esc(u.km) : ''}</div>`;
+    if (u.estado === 'Pendiente') h += '<div class="info w">⏳ Está <b>pendiente de verificación</b> por el prevencionista.</div>'; }
+  if (i.abiertas && i.abiertas.length) h += `<div class="info w"><b>⚠️ Fallas pendientes:</b><br>${i.abiertas.slice(0, 6).map(a => '• ' + esc(a.item) + (a.det ? ': ' + esc(a.det) : '') + ' <span class="mut">(' + esc(a.f) + ')</span>').join('<br>')}<br><span class="small">Revisa si ya se repararon.</span></div>`;
+  return h;
+}
+async function pickPat(v) {
+  if (v === '__nuevo') { Object.assign(S, { nuevoEq: true, patente: '', marca: '', anio: '', eqInfo: null }); render(); guia(true); return; }
+  S.nuevoEq = false; S.patente = v; if (!v) { S.eqInfo = null; render(); return; }
+  const e = S.equipos.find(x => patKey(x.p) === patKey(v)); if (e) { if (e.m) S.marca = e.m; if (e.asi && !S.asientos && CAT() === 'veh') S.asientos = String(e.asi); }
+  S.eqInfo = { cargando: true }; render();
+  try { const d = await api('apiEquipo', S.patente); S.eqInfo = d;
+    if (d.ultimo) { ['soap', 'permiso', 'rt'].forEach(k => { if (!S[k] && d.ultimo[k]) S[k] = d.ultimo[k]; }); if (!S.marca && d.ultimo.marca) S.marca = String(d.ultimo.marca);
+      if (!S.prox && d.ultimo.prox) S.prox = String(d.ultimo.prox); if (!S.anio && d.ultimo.anio) S.anio = String(d.ultimo.anio); if (!S.asientos && d.ultimo.asientos && CAT() === 'veh') S.asientos = String(d.ultimo.asientos); }
+  } catch (e) { S.eqInfo = null; }
+  render(); guia(true);
+}
+function estadoEquipo() { if (S.nuevoEq) return 'Pendiente'; const e = S.equipos.find(x => patKey(x.p) === patKey(S.patente)); return e ? e.e : 'Verificado'; }
+function vBloque(b) {
+  const n = S.paso - 2, tot = nB();
+  return `<div class="card"><div class="bh"><div class="ic">${b.ic}</div><div><div class="mut small">Parte ${n} de ${tot}</div><h2>${esc(b.t)}</h2></div></div>${b.d ? `<p class="m">${esc(b.d)}</p>` : ''}
+  <button class="btn gh" style="padding:10px;font-size:14px" onclick="todoBien('${b.id}')">✅ ${b.sn ? 'Cumplo con todo' : 'Marcar todo Bueno'}</button></div>
+  ${b.items.map(it => vItem(b, it)).join('')}`;
+}
+function vItem(b, it) {
+  const k = b.id + '.' + it.id, v = S.res[k] || '', f = S.fotos[k];
+  const O = b.sn ? [['B', '✅', 'Sí, cumplo'], ['M', '❌', 'No']] : [['B', '✅', 'Bueno'], ['R', '⚠️', 'Regular'], ['M', '❌', 'Malo'], ['NA', '➖', 'No aplica']];
+  return `<div class="item ${v ? 'v-' + v : ''}" id="it-${k.replace('.', '-')}"><div class="it-h"><div class="e">${it.e}</div><div style="flex:1"><b>${esc(it.t)}</b>${it.crit ? '<span class="crit">CRÍTICO</span>' : ''}<button class="oir" onclick="oirItem('${k}')">🔊 Escuchar</button>
+  <div class="tip">${esc(it.tip)}</div><button class="why" onclick="const w=this.nextElementSibling;w.classList.toggle('on');if(w.classList.contains('on'))VOZ.say(w.textContent,w)">💡 ¿Por qué importa?</button><div class="whyt">${esc(it.why)}</div></div></div>
+  <div class="opts ${b.sn ? 'sn' : ''}">${O.map(o => `<button class="${v === o[0] ? 'on ' + o[0] : ''}" onclick="marca('${k}','${o[0]}')"><span class="x">${o[1]}</span>${o[2]}</button>`).join('')}</div>
+  <div class="det ${v === 'R' || v === 'M' ? 'on' : ''}"><textarea placeholder="${b.sn ? 'Cuéntanos qué pasa (obligatorio)' : '¿Qué encontraste? (obligatorio)'}" oninput="S.com['${k}']=this.value;guarda();guia()">${esc(S.com[k] || '')}</textarea>
+  ${b.sn ? '' : `<div class="ph"><label>📷 ${f ? 'Cambiar foto' : 'Agregar foto'}<input type="file" accept="image/*" capture="environment" class="hide" onchange="foto('${k}',this)"></label>${f ? `<img src="data:image/jpeg;base64,${f}">` : ''}</div>`}
+  ${v === 'M' && it.crit ? `<div class="info x" style="margin-top:8px">🛑 <b>${b.sn ? 'Hoy no estás en condiciones de manejar.' : 'Ítem crítico en mal estado:'}</b> ${b.sn ? 'Avisa a tu jefatura para que otra persona lo haga.' : NO_SALE[CAT()] + ' hasta que se corrija.'}</div>` : ''}</div></div>`;
+}
+function marca(k, v) { S.res[k] = v; const sc = window.scrollY; render(); window.scrollTo(0, sc); guia(true);
+  if (v === 'R' || v === 'M') setTimeout(() => { const t = document.querySelector('#it-' + k.replace('.', '-') + ' textarea'); if (t && !t.value) t.focus({ preventScroll: true }); }, 450);
+  const [bid, iid] = k.split('.'), b = bloques().find(x => x.id === bid), it = b.items.find(x => x.id === iid);
+  if (v === 'M' && it.crit) VOZ.say(b.sn ? 'Gracias por ser honesto. Hoy no debes manejar. Avisa a tu jefatura.' : 'Atención. ' + it.t + ' es un punto crítico. Cuenta qué encontraste y saca una foto.');
+  else if (v === 'R' || v === 'M') VOZ.say('Cuenta brevemente qué pasa.');
+  else if (b.items.every(x => S.res[bid + '.' + x.id])) VOZ.say('¡Bien! Terminaste esta parte. Toca siguiente.');
+  else VOZ.stop(); }
+function todoBien(bid) { const b = bloques().find(x => x.id === bid); b.items.forEach(it => { const k = bid + '.' + it.id; if (!S.res[k]) S.res[k] = 'B'; }); const sc = window.scrollY; render(); window.scrollTo(0, sc); guia(true); }
+function achica(file, cb) { const img = new Image(), url = URL.createObjectURL(file);
+  img.onload = () => { const m = 1000, r = Math.min(1, m / Math.max(img.width, img.height)), c = document.createElement('canvas');
+    c.width = Math.round(img.width * r); c.height = Math.round(img.height * r); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    URL.revokeObjectURL(url); cb(c.toDataURL('image/jpeg', 0.7).split(',')[1]); };
+  img.onerror = () => { URL.revokeObjectURL(url); alertaUI('No se pudo leer la foto. Intenta de nuevo.'); }; img.src = url; }
+function foto(k, inp) { const file = inp.files && inp.files[0]; if (!file) return;
+  if (!S.fotos[k] && Object.keys(S.fotos).length >= 6) { alertaUI('Máximo 6 fotos por chequeo.'); return; }
+  achica(file, b => { S.fotos[k] = b; const sc = window.scrollY; render(); window.scrollTo(0, sc); }); }
+function fotoEquipo(inp) { const file = inp.files && inp.files[0]; if (file) achica(file, b => { S.fotoEq = b; const sc = window.scrollY; render(); window.scrollTo(0, sc); }); }
+function alertaUI(t) { document.querySelectorAll('.toast').forEach(x => x.remove()); const d = document.createElement('div'); d.className = 'info x toast'; d.style.cssText = 'position:fixed;left:16px;right:16px;bottom:90px;z-index:9;box-shadow:0 4px 18px #0003;max-width:600px;margin:auto;font-weight:700'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 3500); }
+
+// ===================== EVALUACIÓN =====================
+function evaluar() {
+  const al = [], okItems = [], bl = bloques(), c = CAT(); let pts = 0, max = 0, ap = 0, am = 0;
+  bl.forEach(b => b.items.forEach(it => {
+    const k = b.id + '.' + it.id, v = S.res[k], cm = (S.com[k] || '').trim(), w = it.crit ? 2 : 1;
+    if (v === 'B') okItems.push(it.t);
+    if (!v || v === 'NA') return;
+    const p = v === 'B' ? 1 : v === 'R' ? 0.5 : 0;
+    if (b.aseo) { ap += p; am += 1; } else { pts += p * w; max += w; }
+    if (v === 'M') al.push({ nivel: it.crit ? 'Crítica' : 'Media', item: (b.sn ? 'Conductor: ' : '') + it.t, det: cm });
+    if (v === 'R') al.push({ nivel: it.crit ? 'Media' : 'Leve', item: it.t, det: cm });
+  }));
+  if (c === 'veh') { const asi = num(S.asientos), pas = num(S.pasajeros); if (asi && pas > asi) al.unshift({ nivel: 'Crítica', item: 'Sobrecupo de pasajeros', det: pas + ' trabajadores para ' + asi + ' asientos' }); }
+  if (c === 'comedor') { const t = num(S.trab), b = num(S.banos), n = banosNec();
+    if (t && b === 0) al.unshift({ nivel: 'Crítica', item: 'Sin baños', det: '0 baños para ' + t + ' trabajadores' });
+    else if (b < n) al.unshift({ nivel: 'Media', item: 'Baños insuficientes', det: b + ' baño(s) para ' + t + ' trabajadores (se necesitan ' + n + ')' }); }
+  const le = licEstado(); if (le.nivel) al.unshift({ nivel: le.nivel, item: 'Licencia de conducir', det: le.t.replace(/^\S+\s/, '') });
+  if (estadoEquipo() === 'Pendiente') al.push({ nivel: 'Documento', item: 'Equipo pendiente de verificación', det: S.nuevoEq ? 'Agregado hoy en terreno; el prevencionista debe verificar su inscripción' : 'Aún no verificado por el prevencionista' });
+  if (c === 'veh') [['soap', 'SOAP'], ['permiso', 'Permiso de circulación'], ['rt', 'Revisión técnica']].forEach(([k, t]) => { const dv = dias(S[k]);
+    if (dv == null) al.push({ nivel: 'Documento', item: t, det: 'Sin fecha registrada' });
+    else if (dv < 0) al.unshift({ nivel: 'Crítica', item: t, det: 'Vencido el ' + S[k] });
+    else if (dv <= DIAS_AVISO) al.push({ nivel: 'Documento', item: t, det: 'Vence el ' + S[k] + ' (' + dv + ' días)' }); });
+  const T = TIPOS[S.tipo];
+  if (T.med) { const km = num(S.km), px = num(S.prox), u = T.med;
+    if (km && px) { if (km >= px) al.push({ nivel: 'Media', item: 'Cambio de aceite vencido', det: 'Lleva ' + fmtN(km - px) + ' ' + u + ' pasado' });
+      else if (px - km <= AVISO[u]) al.push({ nivel: 'Leve', item: 'Cambio de aceite próximo', det: 'Faltan ' + fmtN(px - km) + ' ' + u }); } }
+  const IN = indicadores(); if (IN.desde > DIAS_SIN_CHEQUEO) al.push({ nivel: 'Leve', item: 'Sin chequeo semanal', det: 'Último chequeo hace ' + IN.desde + ' días' });
+  const orden = { 'Crítica': 0, 'Documento': 1, 'Media': 2, 'Leve': 3 }; al.sort((a, b) => orden[a.nivel] - orden[b.nivel]);
+  const crit = al.some(a => a.nivel === 'Crítica'), med = al.some(a => a.nivel === 'Media' || a.nivel === 'Documento');
+  const resultado = crit ? 'NO APTO' : med ? 'APTO CON OBSERVACIONES' : 'APTO';
+  const quien = { veh: 'El vehículo', tractor: 'El tractor', comedor: 'El comedor' }[c];
+  const mensaje = crit ? quien + ' ' + NO_SALE[c] + ' hasta corregir las fallas críticas. Avisa de inmediato a tu jefatura.' : med ? 'Se puede usar con precaución. Las observaciones deben corregirse pronto.' : '¡Todo en buenas condiciones! Buen trabajo revisando.';
+  return { al, okItems, pct: max ? Math.round(pts / max * 100) : 0, aseo: am ? Math.round(ap / am * 100) : null, resultado, mensaje };
+}
+function datosInforme() {
+  const c = CAT(), T = TIPOS[S.tipo], d = [];
+  d.push([c === 'veh' ? 'Ruta / recorrido' : 'Predio / lugar', S.lugar]);
+  if (c === 'veh') { d.push(['Asientos de pasajeros', S.asientos]); d.push(['Trabajadores trasladados', S.pasajeros]); }
+  if (c === 'comedor') { d.push(['Trabajadores que lo usan', S.trab]); d.push(['Baños disponibles', S.banos + ' (se necesitan ' + banosNec() + ')']); }
+  if (c === 'tractor') d.push(['Fumigación', S.fumiga === 'si' ? 'Sí' + (S.fumiEq ? ' · ' + S.fumiEq : '') + (S.producto ? ' · ' + S.producto : '') : 'No']);
+  if (T.med) { d.push([T.med === 'km' ? 'Kilometraje' : 'Horómetro', S.km]); if (S.prox) d.push(['Próximo cambio de aceite', S.prox]);
+    const IN = indicadores(); if (IN.faltanTxt) d.push(['Cambio de aceite', IN.faltanTxt + (IN.fechaEst ? ' (aprox. ' + IN.fechaEst + ')' : '')]); }
+  if (c === 'veh') d.push(['SOAP / Permiso / Rev. técnica', [S.soap, S.permiso, S.rt].map(x => x || '—').join(' · ')]);
+  return d.filter(x => x[1] !== '' && x[1] != null);
+}
+function vResumen() {
+  const E = evaluar(), col = E.resultado === 'NO APTO' ? 'var(--bad)' : E.resultado === 'APTO' ? 'var(--ok)' : 'var(--warn)';
+  const ic = E.resultado === 'NO APTO' ? '🛑' : E.resultado === 'APTO' ? '🟢' : '🟠';
+  return `<div class="sem" style="background:${col}"><div style="font-size:40px">${ic}</div><div class="r">${E.resultado}</div><div class="m">${esc(E.mensaje)}</div></div>
+  <div class="kpis"><div class="kpi"><b style="color:${col}">${E.pct}%</b><span>Cumplimiento</span></div><div class="kpi"><b style="color:${E.aseo == null ? 'var(--mut)' : E.aseo >= 80 ? 'var(--ok)' : E.aseo >= 50 ? 'var(--warn)' : 'var(--bad)'}">${E.aseo == null ? '—' : E.aseo + '%'}</b><span>Aseo</span></div><div class="kpi"><b>${E.al.length}</b><span>Alertas</span></div></div>
+  <div class="card"><h3>🚨 Alertas</h3>${E.al.length ? E.al.map(a => `<div class="al"><i class="lv-${a.nivel}">${a.nivel.toUpperCase()}</i><div><b>${esc(a.item)}</b>${a.det ? '<div class="mut small">' + esc(a.det) + '</div>' : ''}</div></div>`).join('') : '<div class="mut">Sin alertas 🎉</div>'}</div>
+  <div class="card"><h3>📋 Resumen</h3><div class="small" style="line-height:1.7"><b>Responsable:</b> ${esc(S.persona.nombre)}<br><b>${esc(TIPOS[S.tipo].t)}:</b> ${esc(patKey(S.patente))}${S.marca ? ' · ' + esc(S.marca) : ''}${estadoEquipo() === 'Pendiente' ? ' <span class="badge b-w">⏳ por verificar</span>' : ''}${datosInforme().map(x => '<br><b>' + esc(x[0]) + ':</b> ' + esc(x[1])).join('')}</div>
+  <label class="l">Observaciones (opcional)</label><textarea placeholder="Algo más que quieras informar" oninput="S.obs=this.value;guarda()">${esc(S.obs)}</textarea></div>`;
+}
+function vReporte() {
+  const w = g => { const on = g.fijo || S.rep.indexOf(g.key) >= 0;
+    return `<div class="who ${on ? 'on' : ''} ${g.fijo ? 'lock' : ''}" onclick="${g.fijo ? '' : `togRep('${g.key}')`}"><div class="ck">${on ? '✓' : ''}</div><div><b>${esc(g.nombre)}</b><span>${esc(g.cargo)}${g.fijo ? ' · recibe siempre' : ''}${!g.mail ? ' · <b style="color:var(--warn)">sin correo registrado</b>' : ''}</span></div></div>`; };
+  return `<div class="card"><div class="bh"><div class="ic">📤</div><div><h2>Se reporta a</h2><div class="mut small">${S.enc.some(g => !g.fijo) ? 'Toca para marcar o desmarcar a los demás' : 'El informe les llega por correo'}</div></div></div>${S.enc.map(w).join('')}</div>
+  <div class="card"><h3>✍️ Tu firma</h3><p class="m">Firmas que revisaste y que lo informado es real.</p><canvas id="cv"></canvas><button class="why" onclick="borraFirma()">Borrar firma</button></div>`;
+}
+function togRep(k) { const i = S.rep.indexOf(k); if (i >= 0) S.rep.splice(i, 1); else S.rep.push(k); const sc = window.scrollY; render(); window.scrollTo(0, sc); }
+let cv, cx, dib = false, trazo = 0;
+function firmaInit() {
+  cv = $('#cv'); if (!cv) return; const r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  cv.width = r.width * dpr; cv.height = r.height * dpr; cx = cv.getContext('2d'); cx.scale(dpr, dpr); cx.lineWidth = 2.4; cx.lineCap = 'round'; cx.strokeStyle = '#0B1A8C';
+  if (S.firma) { const im = new Image(); im.onload = () => cx.drawImage(im, 0, 0, r.width, r.height); im.src = S.firma; }
+  const pos = e => { const b = cv.getBoundingClientRect(), t = e.touches ? e.touches[0] : e; return [t.clientX - b.left, t.clientY - b.top]; };
+  const ini = e => { e.preventDefault(); dib = true; const [x, y] = pos(e); cx.beginPath(); cx.moveTo(x, y); };
+  const mov = e => { if (!dib) return; e.preventDefault(); const [x, y] = pos(e); cx.lineTo(x, y); cx.stroke(); trazo++; };
+  const fin = () => { if (dib) { dib = false; if (trazo > 8) { S.firma = cv.toDataURL('image/png'); guarda(); guia(); } } };
+  cv.addEventListener('pointerdown', ini); cv.addEventListener('pointermove', mov); window.addEventListener('pointerup', fin);
+}
+function borraFirma() { S.firma = ''; trazo = 0; cx && cx.clearRect(0, 0, cv.width, cv.height); guarda(); guia(); }
+function vFin() {
+  const f = S.fin || {};
+  if (!f.ok) return `<div class="card center"><div class="spin"></div><p>Generando informe… no cierres la app.</p></div>`;
+  return `<div class="card center"><div class="big">${f.resultado === 'NO APTO' ? '🛑' : '🎉'}</div><h2>¡Chequeo enviado!</h2>
+  <p class="m">Código <b>${esc(f.codigo)}</b>${f.enviados && f.enviados.length ? '<br>Informe enviado a: ' + esc(f.enviados.join(', ')) : ''}${f.sinCorreo && f.sinCorreo.length ? '<br><span style="color:var(--warn)">Sin correo registrado: ' + esc(f.sinCorreo.join(', ')) + ' (avísales tú)</span>' : ''}</p>
+  ${f.nuevo ? '<div class="info w" style="text-align:left">🆕 Quedó <b>pendiente de verificación</b>. Daniel Zunino recibió la alerta para revisarlo.</div><div style="height:10px"></div>' : ''}
+  ${f.resultado === 'NO APTO' ? `<div class="info x" style="text-align:left">🛑 <b>${esc(NO_SALE[f.cat] || 'No se usa')} hasta corregir.</b> Avisa de inmediato a tu jefatura.</div><div style="height:10px"></div>` : ''}
+  <a class="btn" href="${esc(f.link)}" target="_blank" style="text-decoration:none">📄 Ver informe PDF</a><div style="height:10px"></div>
+  <button class="btn gh" onclick="nuevo()">Hacer otro chequeo</button></div><div class="pie">Creado por Daniel Zunino · Integra Prevención SpA</div>`;
+}
+function nuevo() { Object.assign(S, VACIO(), { paso: 1 }); render(); }
+
+// ===================== GUÍA: la manito apunta al siguiente paso =====================
+function objetivo() {
+  const p = S.paso, c = CAT();
+  if (p === 0) { if (S._noRut && $('#bInscribir')) return $('#bInscribir'); const r = $('#rut'); return r && !rutValido(r.value) ? r : $('#bRut'); }
+  if (p === 1) return $('.eq');
+  if (p === 2) { const q = sel => document.querySelector('#app ' + sel);
+    if (!S.nuevoEq && !S.patente) return q('#selEq');
+    if (S.nuevoEq && !patKey(S.patente)) return q('#in-pat');
+    if (S.nuevoEq && !String(S.marca).trim()) return q('#in-marca');
+    if (!String(S.lugar).trim()) return q('#in-lugar');
+    if (c === 'veh') { if (!num(S.asientos)) return q('#in-asientos'); if (S.pasajeros === '') return q('#in-pasajeros'); }
+    if (c === 'tractor') { if (!S.fumiga) return q('#sinoFum'); if (S.fumiga === 'si' && !S.fumiEq.trim()) return q('#in-fumiEq'); }
+    if (c === 'comedor') { if (!num(S.trab)) return q('#in-trab'); if (S.banos === '') return q('#in-banos'); }
+    if (TIPOS[S.tipo].med && !S.km) return q('#in-km');
+    for (const k of ['soap', 'permiso', 'rt']) { const el = q('#f-' + k); if (el && !S[k]) return el; }
+    return $('#bNext'); }
+  if (p >= 3 && p < pasoResumen()) { const b = bloques()[p - 3];
+    for (const it of b.items) { const k = b.id + '.' + it.id, v = S.res[k], box = document.getElementById('it-' + k.replace('.', '-'));
+      if (!v) return box && box.querySelector('.opts'); if ((v === 'R' || v === 'M') && !(S.com[k] || '').trim()) return box && box.querySelector('textarea'); }
+    return $('#bNext'); }
+  if (p === pasoReporte()) return S.firma ? $('#bNext') : $('#cv');
+  if (p === pasoResumen()) return $('#bNext');
+  return null;
+}
+let _guiaT = 0;
+function guia(mover) {
+  clearTimeout(_guiaT); _guiaT = setTimeout(() => {
+    document.querySelectorAll('.pulso').forEach(e => e.classList.remove('pulso'));
+    const m = $('#mano'), el = objetivo(); if (!m) return;
+    if (!el || el.offsetParent === null) { m.classList.remove('on'); return; }
+    el.classList.add('pulso');
+    const enFoot = !!el.closest('#foot');
+    if (mover && !enFoot) { const r = el.getBoundingClientRect(); if (r.top < 90 || r.bottom > innerHeight - 110) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    setTimeout(ponMano, mover ? 420 : 0);
+  }, 60);
+}
+function ponMano() { const m = $('#mano'), el = document.querySelector('.pulso'); if (!m || !el) return;
+  const r = el.getBoundingClientRect(); m.style.left = Math.min(innerWidth - 50, r.left + Math.min(r.width * 0.7, r.width - 20)) + 'px'; m.style.top = (r.bottom - 14) + 'px';
+  if (r.bottom + 40 > innerHeight) { m.style.top = (r.top - 46) + 'px'; m.textContent = '👇'; } else m.textContent = '👆';
+  m.classList.add('on'); }
+addEventListener('scroll', () => requestAnimationFrame(ponMano), { passive: true }); addEventListener('resize', () => guia());
+document.addEventListener('input', () => guia());
+
+// ===================== NAVEGACIÓN =====================
+function validar() {
+  const p = S.paso, c = CAT(), T = TIPOS[S.tipo];
+  if (p === 1 && !S.tipo) return 'Elige qué vas a revisar.';
+  if (p === 2) { if (!patKey(S.patente)) return S.nuevoEq ? 'Escribe el dato: ' + T.idL.toLowerCase() + '.' : 'Elige de la lista o agrégalo.';
+    if (S.nuevoEq && !S.marca.trim()) return 'Escribe la ' + (c === 'comedor' ? 'descripción' : 'marca o modelo') + '.';
+    if (S.nuevoEq && S.equipos.some(x => patKey(x.p) === patKey(S.patente))) return 'Ya está en la lista: elígelo ahí.';
+    if (!S.lugar.trim()) return c === 'veh' ? 'Indica la ruta o recorrido.' : 'Indica el predio o lugar.';
+    if (c === 'veh') { if (!num(S.asientos)) return 'Indica cuántos asientos de pasajeros tiene.'; if (S.pasajeros === '') return 'Indica cuántos trabajadores vas a llevar.'; if (num(S.asientos) > 60) return 'Revisa el número de asientos.'; }
+    if (c === 'tractor') { if (!S.fumiga) return 'Responde si hoy lleva equipo de fumigación.'; if (S.fumiga === 'si' && !S.fumiEq.trim()) return 'Indica qué equipo de fumigación lleva.'; }
+    if (c === 'comedor') { if (!num(S.trab)) return 'Indica cuántos trabajadores usan el comedor.'; if (S.banos === '') return 'Indica cuántos baños hay (si no hay, pon 0).'; }
+    if (T.med && !S.km) return 'Indica el ' + (T.med === 'km' ? 'kilometraje' : 'horómetro') + '.';
+    if (c === 'veh' && (!S.soap || !S.permiso || !S.rt)) return 'Completa las 3 fechas de documentos. Si no las encuentras, avisa a tu jefatura.'; }
+  if (p >= 3 && p < pasoResumen()) { const b = bloques()[p - 3];
+    for (const it of b.items) { const k = b.id + '.' + it.id, v = S.res[k];
+      if (!v) { ir(k); return 'Falta responder: ' + it.t; }
+      if ((v === 'R' || v === 'M') && (S.com[k] || '').trim().length < 3) { ir(k); return 'Cuenta brevemente qué pasa en: ' + it.t; } } }
+  if (p === pasoReporte() && !S.firma) return 'Falta tu firma (dibuja con el dedo en el recuadro).';
+  return '';
+}
+function ir(k) { const el = document.getElementById('it-' + k.replace('.', '-')); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+$('#bBack').onclick = () => { if (S.enviando) return; S.paso = S.paso <= 1 ? 0 : S.paso - 1; render(); };
+$('#bNext').onclick = () => { if (S.enviando) return; const e = validar(); if (e) { alertaUI(e); VOZ.say(e); guia(true); return; } if (S.paso === pasoReporte()) return enviar(); S.paso++; render(); };
+async function enviar() {
+  if (S.enviando) return;
+  S.enviando = true; if (!S.envio) S.envio = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); render();
+  const E = evaluar(), bl = bloques(), c = CAT();
+  const fotos = Object.keys(S.fotos).map(k => { const [b, i] = k.split('.'), bb = bl.find(x => x.id === b), it = bb && bb.items.find(x => x.id === i); return it ? { item: it.t, b64: S.fotos[k] } : null; }).filter(Boolean);
+  const body = { envio: S.envio, pid: S.persona.id, tipo: S.tipo, cat: c, patente: S.patente, nuevo: S.nuevoEq, marca: S.marca, anio: S.anio, fotoEquipo: S.nuevoEq ? S.fotoEq : '',
+    lugar: S.lugar, asientos: c === 'veh' ? num(S.asientos) : '', pasajeros: c === 'veh' ? num(S.pasajeros) : '', trab: c === 'comedor' ? num(S.trab) : '', banos: c === 'comedor' ? num(S.banos) : '',
+    fumiga: c === 'tractor' && S.fumiga === 'si', fumiEq: S.fumiEq, producto: S.producto,
+    km: S.km, prox: S.prox, soap: c === 'veh' ? S.soap : '', permiso: c === 'veh' ? S.permiso : '', rt: c === 'veh' ? S.rt : '', datos: datosInforme(),
+    resultado: E.resultado, mensaje: E.mensaje, pct: E.pct, aseo: E.aseo, alertas: E.al, okItems: E.okItems, obs: S.obs, reportar: S.rep, firma: S.firma, fotos,
+    bloques: bl.map(b => ({ t: b.t, sn: !!b.sn, items: b.items.map(it => ({ t: it.t, crit: it.crit, v: S.res[b.id + '.' + it.id] || '', c: S.com[b.id + '.' + it.id] || '' })) })) };
+  const pasoAnt = S.paso; S.paso = pasoFin(); S.fin = null; render();
+  try {
+    const d = await api('apiGuardar', body);
+    if (!d.ok) throw d.error || 'error';
+    S.fin = Object.assign(d, { resultado: E.resultado, cat: c }); S.enviando = false; try { localStorage.removeItem(LS); } catch (e) {}
+    $('#app').innerHTML = vFin(); $('#foot').classList.add('hide'); $('#bar').style.width = '100%'; $('#mano').classList.remove('on');
+    VOZ.say(E.resultado === 'NO APTO' ? 'Chequeo enviado. Recuerda: ' + NO_SALE[c].toLowerCase() + ' hasta corregir. Avisa de inmediato a tu jefatura.' : '¡Chequeo enviado! Gracias por cuidar a tu cuadrilla.');
+  } catch (e) { S.enviando = false; S.paso = pasoAnt; render(); alertaUI('No se pudo enviar. Revisa tu señal y toca Enviar de nuevo: tu chequeo está guardado.'); VOZ.say('No se pudo enviar. Revisa tu señal e intenta de nuevo. Tu chequeo está guardado.'); }
+}
+// Arranque
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const enlace = q.get('aprobar') ? { api: 'aprobar', tok: q.get('aprobar'), t: 'Verificación de equipo' } : q.get('activar') ? { api: 'activar', tok: q.get('activar'), t: 'Activación de persona' } : null;
+  if (enlace) {
+    try { const d = await fetch(SCRIPT_URL + '?' + new URLSearchParams({ api: enlace.api, tok: enlace.tok, ok: q.get('ok') })).then(r => r.json());
+      $('#app').innerHTML = `<div class="card center"><div class="big">${!d.ok ? '⚠️' : d.aprobado ? '✅' : '❌'}</div><h2>${enlace.t}</h2><p class="m" style="font-size:16px">${esc(d.msg || d.error || '')}</p><a class="btn gh" href="${location.pathname}" target="_self" style="text-decoration:none">Ir a los chequeos</a></div>`;
+    } catch (e) { $('#app').innerHTML = '<div class="card info x">No se pudo conectar con el servidor. Intenta de nuevo.</div>'; }
+    return;
+  }
+  if (/PEGAR_AQUI/.test(SCRIPT_URL)) { render(); return; }
+  try { const d = await api('apiInicio'); S.form = d.form || ''; } catch (e) {}
+  render();
+})();
+</script>
+</body>
+</html>
