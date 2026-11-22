@@ -1,3 +1,4 @@
+var rutKey = s => String(s || '').replace(/[^0-9kK]/g, '').toUpperCase().replace(/^0+/, '');
 /* MEJORAS CHEQUEOS COMFRUT · Creado por Daniel Zunino · Integra Prevención SpA
    - Documentos del vehículo: foto + fecha SOLO la primera vez; después silencio hasta 15 días antes de vencer; vencido = se piden de nuevo.
    - Identificación más corta (RUT recordado, "Mi equipo de siempre", ruta recordada).
